@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+    nextjs_prod:
+        build:
+            context: .
+            dockerfile: Dockerfile-prod
+        ports:
+            - "127.0.0.1:5000:5000"
+        volumes:
+            - "/app/node_modules"
+        links:
+            - redis
+        environment:
+            NODE_ENV: "production"
+            LD_LIBRARY_PATH: "/opt/oracle/instantclient_19_10"
+            WALLET: "/app/oracle/wallet"
+        container_name: nextjs_prod
+        image: nextjs_prod:latest
+    nextjs_prod2:
+        build:
+            context: .
+            dockerfile: Dockerfile-prod
+        ports:
+            - "127.0.0.1:5001:5000"
+        volumes:
+            - "/app/node_modules"
+        links:
+            - redis
+        environment:
+            NODE_ENV: "production"
+            LD_LIBRARY_PATH: "/opt/oracle/instantclient_19_10"
+            WALLET: "/app/oracle/wallet"
+        container_name: nextjs_prod2
+        image: nextjs_prod:latest
+    redis:
+        restart: always
+        container_name: redis
+        image: redis:alpine
+        ports:
+            - "127.0.0.1:6379:6379"
+        command: [sh, -c, "rm -f /data/dump.rdb && redis-server --save ''"]
+    nginx:
+        build: ./nginx
+        ports:
+            - "443:443"
+        links:
+            - nextjs_prod
+            - nextjs_prod2
