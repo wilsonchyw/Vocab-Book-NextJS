@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Vocabsitory
+[Vocabsitory](https://vocabsitory.site/)(Vocabulary Repository) is an application combined with the forgetting curve to learn new words. It helps to learn vocabulary in an more efficient way.<p />
 
-## Getting Started
+This application also demonstrate the integration of NextJS with SSL, Knex, Firebase and Nginx
 
-First, run the development server:
+The demonstration is deployed on Oracle cloud and Cloudflare. It is Ad-free and free for use.
 
-```bash
-npm run dev
-# or
-yarn dev
+ <img src="https://i.imgur.com/FanQzUF.png" width="300">
+ 
+## Tech Stack
+#### Database
+- Oracle autonomous database, Redius
+#### Backend
+- Firebase, Knex
+#### Frontend
+- NextJS, Bootstrap, React, Redux 
+#### Deployment
+- Docker, Nginx, CloudFlare
+#### Unit testing
+- Jest
+
+## Development
+If you like this project, feel free to clone and deploy your own one.
+### Preparation
+- Create an `.env` file on root folder
+- Oracle Database</p>
+Download the database wallet and place all files into `oracle/wallet`. Include the database login information in `.env`.
+```
+DATABASEUSER=<you database username>
+DATABASEPASS=<you database password>
+CONNNETSTRING=<you database connnectstring, could find in wallet/tnsnames.ora>
+```
+- Firebase</p>
+Create a Firebase project. Obtain the Firebase config from `Firebase console > Project setting > General > SDK setup and configuration`. Copy and append all into `.env` (Remenber to change `:` to `=`)
+```
+...
+apiKey=Example
+authDomain=Example
+projectId=Example
+storageBucket=Example
+messagingSenderId=Example
+appId=Example
+measurementId=Example
+```
+- Firebase Admin</p>
+Obtain your private key from `Firebase console > Project setting > Service accounts > Generate new private key`. Copy `project_id, private_key and client_email` then append it into `.env` (Remenber to change `:` to `=`)
+```
+...
+project_id=Example
+private_key=Example
+client_email=Example
+```
+### Start
+```
+docker-compose -f docker-compose-dev.yml up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+Contributions, issues, and feature requests are welcome!
+Give a ⭐️ if you like this project!
