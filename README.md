@@ -1,9 +1,7 @@
 ## Vocabsitory
 [Vocabsitory](https://vocabsitory.site/)(Vocabulary Repository) is an application combined with the forgetting curve to learn new words. It helps to learn vocabulary in an more efficient way.<p />
 
-This application also demonstrate the integration of NextJS with SSL, Knex, Firebase and Nginx
-
-The demonstration is deployed on Oracle cloud and Cloudflare. It is Ad-free and free for use.
+The [demonstration](https://vocabsitory.site/) integrate NextJS with SSL, Knex, Firebase and Nginx. It deployed on Oracle cloud and Cloudflare. It is Ad-free and free for use.
 
  <img src="https://i.imgur.com/FanQzUF.png" width="300">
  
@@ -20,7 +18,6 @@ The demonstration is deployed on Oracle cloud and Cloudflare. It is Ad-free and 
 - Jest
 
 ## Development
-If you like this project, feel free to clone and deploy your own one.
 ### Preparation
 - Create an `.env` file on root folder
 - Oracle Database</p>
@@ -53,6 +50,15 @@ client_email=Example
 ### Start
 ```
 docker-compose -f docker-compose-dev.yml up --build
+```
+
+## Deployment
+### Preparation
+- SSL certificate</p>
+You may obtain a free SSl certificate from [Let's Encrypt](https://letsencrypt.org/). Place the `privkey.pem` and `fullchain.pem` into `nginx/certificate` folder. 
+### Start
+```
+docker-compose -f docker-compose-prod.yml up --build
 ```
 
 ## Contributing
