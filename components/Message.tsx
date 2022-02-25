@@ -7,18 +7,18 @@ import { setMessage } from 'components/slices/messageSlice';
 
 const Message: FunctionComponent = () => {
     const dispatch = useDispatch()
-    const {message, type} = useSelector((state: RootState) => state.message)
-    const handleClose = () => dispatch(setMessage(""))
+    const { message, type, duration } = useSelector((state: RootState) => state.message)
+    const handleClose = () => dispatch(setMessage({ message: "", duration: null }))
 
     useEffect(() => {
-        setTimeout(() => { if (message) handleClose() }, 5000)
+        setTimeout(() => { if (message) handleClose() }, duration || 5000)
     })
 
     return (
         <>
             {!!message &&
                 <div className="dialog" onClick={handleClose}>
-                    <Alert variant={type === "normal" ? "primary" : "danger"} className="m-0 d-flex justify-content-between">
+                    <Alert variant={type === "normal" ? "primary" : "danger"} className="m-0 d-flex justify-content-between" style={{ 'white-space': 'pre-wrap' }}>
                         {message}
                     </Alert>
                 </div>

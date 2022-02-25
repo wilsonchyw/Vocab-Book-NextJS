@@ -9,6 +9,8 @@ import speak from "lib/speak";
 import type { Vocab } from "lib/vocab";
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Col, Row } from "react-bootstrap";
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 type rowProp = {
     data: Vocab
@@ -25,11 +27,18 @@ type visable = {
     meaning: Boolean
 }
 
-const Verifier: FunctionComponent = ({ word, setVisable }: { word: string, setVisable: Function }) => {
+type verifierProps = { 
+    word: string, 
+    setVisable: Function, 
+    autoPlay: Boolean 
+}
+
+const Verifier: FunctionComponent = ({ word, setVisable, autoPlay }: verifierProps) => {
     const [answer, setAnswer] = useState<string>("")
     const verifyInput = (input: string) => {
         setAnswer(input)
         if (input === word) {
+            if (autoPlay) speak(answer)
             setVisable({ vocab: true, meaning: true })
         }
     }
@@ -46,6 +55,7 @@ const Verifier: FunctionComponent = ({ word, setVisable }: { word: string, setVi
 const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: rowProp) => {
     const [_visable, setVisable] = useState<visable>({})
     const [expand, setExpand] = useState<Boolean>(false)
+    const autoPlay = useSelector((state: RootState) => state.user.autoPlay)
 
     useEffect(() => {
         setVisable(visable)
@@ -89,7 +99,7 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: row
                     </span>
                 </Col>
                 <Col className="px-0" xs={2}>
-                    <Verifier word={data.vocabulary} setVisable={setVisable} />
+                    <Verifier word={data.vocabulary} setVisable={setVisable} autoPlay={autoPlay} />
                 </Col>
                 <Col onClick={() => setVisable({ ..._visable, vocab: !_visable.vocab })} className="px-0" xs={2}>
                     {_visable.vocab && data.vocabulary}

@@ -1,5 +1,5 @@
 import Divider from 'components/Divider';
-import { changeFilterType,  toggleDialog } from "components/slices";
+import { changeFilterType, toggleDialog,toggleAutoPlay } from "components/slices";
 import { setRevisionInterval } from "components/slices/userSlice";
 import VoiceSetting from "components/VoiceSetting";
 import { firebase } from 'lib/firebaseInit';
@@ -12,9 +12,10 @@ const intervals = [0, 1, 2, 3, 7, 14, 21, 30, 60]
 
 const Profile: FunctionComponent = () => {
     const dispatch = useDispatch()
-    const { dialog, user, vocabs, revisionInterval, filterType } = useSelector((state: RootState) => ({ ...state.user, ...state.list }))
+    const { dialog, user, vocabs,autoPlay, revisionInterval, filterType } = useSelector((state: RootState) => ({ ...state.user, ...state.list }))
     const signout = (): void => {
         toggle()
+        localStorage.removeItem("token")
         firebase.auth().signOut()
     }
     const changeMode = (type: string): void => {
@@ -44,9 +45,11 @@ const Profile: FunctionComponent = () => {
                                         {intervals.map(interval =>
                                             <Button variant={revisionInterval.includes(interval) ? "primary" : "light"} onClick={() => dispatch(setRevisionInterval(interval))} key={interval}>{interval}</Button>
                                         )}
-                                    </ButtonGroup>
+                                    </ButtonGroup>                                    
                                 </>
                             }
+                            <Divider content="Speak if input correct" className="mx-1" />
+                            <Button variant={autoPlay ? "primary" : "light"} onClick={() => dispatch(toggleAutoPlay())} size="sm">Auto play</Button>
                             <VoiceSetting />
                         </Card.Text>
                         <hr className="my-12" />

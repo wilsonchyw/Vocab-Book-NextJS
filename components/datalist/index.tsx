@@ -32,7 +32,7 @@ const Datalist: FunctionComponent = ({ datas, mutate }: props) => {
     const {revisionInterval} = useSelector((state:RootState)=>state.user)
 
     const filterCallback = {
-        keyword: (vocab: Vocab) => vocab.vocabulary.includes(keyword) || vocab.meaning.includes(keyword),
+        keyword: (vocab: Vocab) => vocab.vocabulary.toLowerCase().includes(keyword.toLowerCase()) || vocab.meaning.includes(keyword),
         forgettingCurve: (vocab: Vocab) => revisionInterval.map((day:number)=>isWithinRange(vocab.createAt, day)).includes(true)//isWithinRange(vocab.createAt, 1) || isWithinRange(vocab.createAt, 2) || isWithinRange(vocab.createAt, 5) || isWithinRange(vocab.createAt, 31)
     }
 

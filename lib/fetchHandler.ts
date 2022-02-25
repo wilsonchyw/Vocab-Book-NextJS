@@ -8,7 +8,9 @@ const { publicRuntimeConfig } = getConfig();
 async function fetchHandler(option: VerifiedObj, callback: Function | null = null) {
     try {
         verifier.atLeast(["url"], option);
-        const token: string = await firebase.auth().currentUser.getIdToken();
+        const localToken = localStorage.getItem("token")
+        const token: string =  localToken || await firebase.auth().currentUser.getIdToken();
+        if (!localToken) localStorage.setItem("token", token)
         if (token) option.headers = { Authorization: token };
         if (!option.method) option.method = "get";
 
@@ -19,6 +21,7 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
             return callback ? callback(response.data) : response.data;
         }
     } catch (err) {
+        localStorage.removeItem("token")
         errorHandler(err);
     }
 }

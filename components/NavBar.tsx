@@ -1,6 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PerPageDropdown from "components/datalist/PerPageDropdown";
-import Profile from 'components/Profile';
+//import PerPageDropdown from "components/datalist/PerPageDropdown";
+//import Profile from 'components/Profile';
 import { toggleCreate } from 'components/slices/dialogSlice';
 import { changeOrderType, changePerPage } from 'components/slices/listSlice';
 import { toggleDialog } from "components/slices/userSlice";
@@ -10,6 +10,10 @@ import { FunctionComponent } from 'react';
 import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
+import dynamic from 'next/dynamic'
+
+const Profile = dynamic(()=>import('components/Profile'))
+const PerPageDropdown = dynamic(()=>import('components/datalist/PerPageDropdown'))
 
 const NavBar: FunctionComponent = () => {
     const dispatch = useDispatch()

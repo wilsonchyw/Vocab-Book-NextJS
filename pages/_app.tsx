@@ -5,6 +5,7 @@ import NavBar from "components/NavBar";
 import { setUser } from 'components/slices/userSlice';
 import 'firebase/compat/auth';
 import { firebase } from "lib/firebaseInit";
+import LOG from "lib/log";
 import type { AppProps } from 'next/app';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -14,17 +15,26 @@ import { store } from "store";
 import '../styles/custom.css';
 import '../styles/globals.css';
 
+function getLocal():string | null {
+    if (typeof window !== "undefined") {
+        localStorage.getItem("token")
+    }
+    return null
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter()
-    const [hideContent, setHideContent] = useState<Boolean>(true);
+    const [hideContent, setHideContent] = useState<Boolean>(false);
 
 
-    function authCheck() {
+    async function authCheck() {
         if (router.pathname === "/login") return setHideContent(false)
-
+        if(getLocal()) setHideContent(false)
+        LOG("Local token found")
         firebase.auth().onIdTokenChanged((user: firebase.user) => {
+            LOG("Firebase user check")
             if (user) {
+                LOG(user)
                 store.dispatch(setUser(user.displayName))
             } else {
                 store.dispatch(setUser(null))
@@ -34,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         });
     }
 
-    useEffect(() => {
+    useEffect(() => {        
         authCheck()
     }, [router.pathname])
 
@@ -43,7 +53,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Provider store={store} >
                 <Message />
                 <NavBar />
-                {!hideContent ? <Component {...pageProps} /> : <Loading />}
+                {!hideContent ? <Component {...pageProps}  /> : <Loading />
+                }
             </Provider>
         </SSRProvider>
     )
