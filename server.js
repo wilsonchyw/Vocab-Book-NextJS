@@ -7,7 +7,6 @@ const port = process.env.PORT || 5000;
 const app = next({ hostname, port });
 const handle = app.getRequestHandler();
 const Cors = require("cors");
-const LOG = require("lib/log")
 
 const options = {
     key: fs.readFileSync("nginx/certificate/privkey.pem"),
@@ -36,12 +35,12 @@ app.prepare().then(() => {
     https
         .createServer(options, async (req, res) => {
             const parsedUrl = parse(req.url, true);
-            LOG(`Handle request by process ${process.pid} , Method: ${req.method}`)
+            console.log(`Handle request by process ${process.pid} , Method: ${req.method}`)
             await cors(req, res);
             handle(req, res, parsedUrl);
         })
         .listen(port, (err) => {
             if (err) throw err;
-            LOG(`> Ready on https://${hostname}:${port}`);
+            console.log(`> Ready on https://${hostname}:${port}`);
         });
 });

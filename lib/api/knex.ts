@@ -33,8 +33,8 @@ function connect() {
         });
     } catch (err) {
         console.log(err);
-        LOG.save("Error on initial oracledb client");
-        LOG.save(err);
+        LOG("Error on initial oracledb client");
+        LOG(err);
     }
 }
 
@@ -50,7 +50,7 @@ function getKnex() {
             acquireConnectionTimeout: 5000,
             fetchAsString: ["number", "clob"],
         });
-        LOG.save("No instance found");
+        LOG("No instance found");
     }
     return cached.instance;
 }

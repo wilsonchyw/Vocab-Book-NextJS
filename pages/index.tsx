@@ -43,7 +43,7 @@ function Frame(): NextPage {
         LOG("useEffect call")
         if (shoudShowUpdate()) {
             store.dispatch(setMessage({ message: UPDATE ,duration:999}))
-            //localStorage.setItem("lastseen", String(Date.now()))
+            localStorage.setItem("lastseen", String(Date.now()))
         }
     }, [])
 
