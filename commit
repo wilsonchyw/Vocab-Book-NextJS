@@ -1,7 +1,3 @@
-Bug fix and performance enhance
-Dynamically some unnecessary component
-Add auto play if user input correct in verifier
-Add local token to enhance performance
-Fix log lib
-Fix upper case searching bug 
-Fix " wrongly appear in message
+Bug fix
+Fix speak the word instead of user input
+Fix Log error

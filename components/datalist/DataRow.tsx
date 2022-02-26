@@ -38,7 +38,7 @@ const Verifier: FunctionComponent = ({ word, setVisable, autoPlay }: verifierPro
     const verifyInput = (input: string) => {
         setAnswer(input)
         if (input === word) {
-            if (autoPlay) speak(answer)
+            if (autoPlay) speak(word)
             setVisable({ vocab: true, meaning: true })
         }
     }

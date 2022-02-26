@@ -25,8 +25,7 @@ function wrapper(controller: controller) {
                     clearCache();
                     return res.status(400).json({ message: "Server problem, please try again" });
                 }
-                console.log(error);
-                LOG.save(error);
+                LOG(error);
                 return res.status(400).json({ message: error.toString() });
             });
     };

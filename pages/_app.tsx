@@ -30,11 +30,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     async function authCheck() {
         if (router.pathname === "/login") return setHideContent(false)
         if(getLocal()) setHideContent(false)
-        LOG("Local token found")
+        //LOG("Local token found")
         firebase.auth().onIdTokenChanged((user: firebase.user) => {
-            LOG("Firebase user check")
+            //LOG("Firebase user check")
             if (user) {
-                LOG(user)
+                //LOG(user)
                 store.dispatch(setUser(user.displayName))
             } else {
                 store.dispatch(setUser(null))

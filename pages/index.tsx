@@ -30,7 +30,7 @@ function shoudShowUpdate(): Boolean {
 
 async function fetcher(url: string) {
     const option = { url: url }
-    LOG("Fetching data from server")
+    //LOG("Fetching data from server")
     const result = await apiHandler(option)
     store.dispatch(setVocabs(result.length))
     return result;
@@ -40,7 +40,7 @@ function Frame(): NextPage {
     const { data, mutate } = useSWR("/vocab", fetcher);
 
     useEffect(() => {
-        LOG("useEffect call")
+        //LOG("useEffect call")
         if (shoudShowUpdate()) {
             store.dispatch(setMessage({ message: UPDATE ,duration:999}))
             localStorage.setItem("lastseen", String(Date.now()))
