@@ -18,7 +18,7 @@ const Message: FunctionComponent = () => {
         <>
             {!!message &&
                 <div className="dialog" onClick={handleClose}>
-                    <Alert variant={type === "normal" ? "primary" : "danger"} className="m-0 d-flex justify-content-between" style={{ 'white-space': 'pre-wrap' }}>
+                    <Alert variant={type === "normal" ? "primary" : "danger"} className="m-0 d-flex justify-content-between" style={{ whiteSpace: 'pre-wrap' }}>
                         {message}
                     </Alert>
                 </div>

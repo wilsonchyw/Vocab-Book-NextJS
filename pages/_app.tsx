@@ -6,6 +6,7 @@ import { setUser } from 'components/slices/userSlice';
 import 'firebase/compat/auth';
 import { firebase } from "lib/firebaseInit";
 import getLocalToken from 'lib/localToken';
+import LOG from 'lib/log';
 import type { AppProps } from 'next/app';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter()
-    const [hideContent, setHideContent] = useState<Boolean>(false);
+    const [hideContent, setHideContent] = useState<Boolean>(true);
 
 
     async function authCheck() {
@@ -29,7 +30,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         firebase.auth().onIdTokenChanged((user: firebase.user) => {
             //LOG("Firebase user check")
             if (user) {
-                //LOG(user)
+                //LOG("firebase user found")
+                localStorage.setItem("expirationTime",user._delegate.stsTokenManager.expirationTime)
                 store.dispatch(setUser(user.displayName))
             } else {
                 store.dispatch(setUser(null))
