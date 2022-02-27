@@ -1,16 +1,17 @@
 import axios from "axios";
 import { firebase } from "lib/firebaseInit";
-import errorHandler from "./errorHandler";
-import verifier, { VerifiedObj } from "./verifier";
 import getConfig from "next/config";
+import errorHandler from "./errorHandler";
+import getLocalToken from "./localToken";
+import verifier, { VerifiedObj } from "./verifier";
 const { publicRuntimeConfig } = getConfig();
 
 async function fetchHandler(option: VerifiedObj, callback: Function | null = null) {
     try {
         verifier.atLeast(["url"], option);
-        const localToken = localStorage.getItem("token")
-        const token: string =  localToken || await firebase.auth().currentUser.getIdToken();
-        if (!localToken) localStorage.setItem("token", token)
+        const localToken = getLocalToken()
+        const token: string = localToken || await firebase.auth().currentUser.getIdToken();
+        if (!localToken) localStorage.setItem("token", JSON.stringify({ token: token, timeSteamp: Date.now() }))
         if (token) option.headers = { Authorization: token };
         if (!option.method) option.method = "get";
 
