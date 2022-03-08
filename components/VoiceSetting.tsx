@@ -8,36 +8,32 @@ import { MouseEvent } from "react"
 //typeof window !== "undefined" ? window.speechSynthesis.getVoices().filter((x) => x.lang.includes("en"))
 const voiceList = [
     {
-        "name": "English (Australia)",
-        "lang": "en-AU"
-    },
-    {
-        "name": "English (Canada)",
-        "lang": "en-CA"
-    },
-    {
-        "name": "English (India)",
-        "lang": "en-IN"
-    },
-    {
-        "name": "English (Ireland)",
-        "lang": "en-IE"
-    },
-    {
-        "name": "English (Philippines)",
-        "lang": "en-PH"
-    },
-    {
-        "name": "English (South Africa)",
-        "lang": "en-ZA"
-    },
-    {
         "name": "English (United Kingdom)",
         "lang": "en-GB"
     },
     {
         "name": "English (United States)",
         "lang": "en-US"
+    },
+    {
+        "name": "German (Germany)",
+        "lang": "de-DE"
+    },
+    {
+        "name": "French (France)",
+        "lang": "fr-FR"
+    },
+    {
+        "name": "Polish (Poland)",
+        "lang": "pl-PL"
+    },
+    {
+        "name": "Italian (Italy)",
+        "lang": "it-IT"
+    },
+    {
+        "name": "Spanish (Spain)",
+        "lang": "es-ES"
     }]
 
 const VoiceSetting: FunctionComponent = () => {

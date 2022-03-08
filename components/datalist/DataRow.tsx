@@ -27,10 +27,10 @@ type visable = {
     meaning: Boolean
 }
 
-type verifierProps = { 
-    word: string, 
-    setVisable: Function, 
-    autoPlay: Boolean 
+type verifierProps = {
+    word: string,
+    setVisable: Function,
+    autoPlay: Boolean
 }
 
 const Verifier: FunctionComponent = ({ word, setVisable, autoPlay }: verifierProps) => {
@@ -45,7 +45,7 @@ const Verifier: FunctionComponent = ({ word, setVisable, autoPlay }: verifierPro
 
     return (
         <div>
-            <input onChange={(e) => verifyInput(e.target.value)} className="form-control form-control-sm w-75 d-inline"></input>
+            <input onChange={(e) => verifyInput(e.target.value)} onClick={() => speak(word)} className="form-control form-control-sm w-75 d-inline"></input>
             {answer ? answer === word ? <CheckIcon color="primary" /> : <ClearIcon color="danger" /> : ""}
         </div>
     )

@@ -3,7 +3,7 @@ services:
     nextjs_dev:
         build:
             context: .
-            dockerfile: Dockerfile-dev
+            dockerfile: Dockerfile-dev5
         ports:
             - "5002:5002"
         volumes:
@@ -17,6 +17,7 @@ services:
             API_ENDPOINT: "https://api.vocabsitory.site/api"
         image: nextjs_dev
         container_name: nextjs_dev
+        
     redis:
         restart: always
         container_name: redis

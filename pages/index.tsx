@@ -12,12 +12,9 @@ import { useEffect } from "react"
 import { setMessage } from "components/slices/messageSlice";
 
 const LAST_UPDATE_DATE = 1645801777766
-const UPDATE = `New function for better memorize:
-Auto play if you input correct in verifier.
-Check it out in the profile button👉
+const UPDATE = `Due to database error, datas saved in 7/3 corrupted. sorry for such mistake
 
-Performance enhanced:
-Re-login if you have any problem
+Meanwhile, this app could speak multiple languages now. Check it out in the profile button👉
 `
 
 function shoudShowUpdate(): Boolean {

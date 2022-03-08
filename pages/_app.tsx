@@ -6,7 +6,6 @@ import { setUser } from 'components/slices/userSlice';
 import 'firebase/compat/auth';
 import { firebase } from "lib/firebaseInit";
 import getLocalToken from 'lib/localToken';
-import LOG from 'lib/log';
 import type { AppProps } from 'next/app';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

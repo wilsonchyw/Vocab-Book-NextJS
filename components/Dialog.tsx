@@ -88,7 +88,7 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
 
 
     return (
-        <Modal show={show} onHide={handleClose} centered scrollable={true}>
+        <Modal show={show} onHide={handleClose} centered scrollable={true} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>{isEdit ? "Editing" : "Creating"}</Modal.Title>
             </Modal.Header>

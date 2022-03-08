@@ -1,3 +1,3 @@
-Bug fix
-Fix speak the word instead of user input
-Fix Log error
+Speak when click on verifier
+Dialog wouldn't close when outside area is clicked
+Multiple languages are supported for 'speak'

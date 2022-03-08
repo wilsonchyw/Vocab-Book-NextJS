@@ -7,8 +7,8 @@ export interface voiceState {
 }
 
 const initialState: voiceState = {
-    lang: "en-US",
-    name: "English (United States)",
+    lang: localStorage.getItem("lang") || "en-US",
+    name: localStorage.getItem("langName") || "English (United States)",
     rate: 0.7,
 };
 
@@ -22,6 +22,8 @@ export const voiceSlice = createSlice({
         setVoide: (state: voiceState, action: PayloadAction<{ name: string; lang: string }>) => {
             state.lang = action.payload.lang;
             state.name = action.payload.name;
+            localStorage.setItem("lang", action.payload.lang)
+            localStorage.setItem("langName", action.payload.name)
         },
     },
 });
