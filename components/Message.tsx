@@ -17,7 +17,7 @@ const Message: FunctionComponent = () => {
     return (
         <>
             {!!message &&
-                <div className="dialog" onClick={handleClose}>
+                <div className="dialog" onClick={handleClose} >
                     <Alert variant={type === "normal" ? "primary" : "danger"} className="m-0 d-flex justify-content-between" style={{ whiteSpace: 'pre-wrap' }}>
                         {message}
                     </Alert>

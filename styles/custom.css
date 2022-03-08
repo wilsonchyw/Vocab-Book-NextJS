@@ -58,7 +58,7 @@ body {
     -webkit-animation: fadein 1s;
     z-index: 2000;
     position: fixed;
-    left: 20%;
+    left: 30%;
     width: 40%;
     top: 1%;
 }

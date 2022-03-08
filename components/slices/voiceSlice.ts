@@ -7,10 +7,24 @@ export interface voiceState {
 }
 
 const initialState: voiceState = {
-    lang: localStorage.getItem("lang") || "en-US",
-    name: localStorage.getItem("langName") || "English (United States)",
+    lang: getFromLocal("lang", "en-US"),
+    name: getFromLocal("langName", "English (United States)"),
     rate: 0.7,
 };
+
+function saveLocal(key: string, value: string) {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(key, value)
+    }
+}
+
+function getFromLocal(key: string, _default: string) {
+    if (typeof window !== 'undefined') {
+        const data = localStorage.getItem(key)
+        if (data) return data
+    }
+    return _default
+}
 
 export const voiceSlice = createSlice({
     name: "dialog",
@@ -22,8 +36,8 @@ export const voiceSlice = createSlice({
         setVoide: (state: voiceState, action: PayloadAction<{ name: string; lang: string }>) => {
             state.lang = action.payload.lang;
             state.name = action.payload.name;
-            localStorage.setItem("lang", action.payload.lang)
-            localStorage.setItem("langName", action.payload.name)
+            saveLocal("lang", action.payload.lang)
+            saveLocal("langName", action.payload.name)
         },
     },
 });

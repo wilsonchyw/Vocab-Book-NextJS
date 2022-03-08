@@ -12,9 +12,10 @@ import { useEffect } from "react"
 import { setMessage } from "components/slices/messageSlice";
 
 const LAST_UPDATE_DATE = 1646744035854
-const UPDATE = `Due to database error, datas saved in 7/3 corrupted. sorry for such mistake
+const UPDATE = `Due to database error, datas saved in 7/3 corrupted. Sorry
 
-Meanwhile, this app could speak multiple languages now. Check it out in the profile button👉
+Meanwhile, this app could speak multiple languages now.
+Check it out in the profile button👉
 `
 
 function shoudShowUpdate(): Boolean {
