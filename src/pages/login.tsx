@@ -10,9 +10,12 @@ const uiConfig = {
         firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
-    signInSuccessUrl: '/',
+    signInSuccessUrl: '/vocab',
     callbacks: {
-        //signInSuccessWithAuthResult: () => false,
+        signInSuccessWithAuthResult: (currentUser: any) => {
+            localStorage.setItem("token", currentUser.user._delegate.accessToken)
+            return true
+        },
     },
 };
 

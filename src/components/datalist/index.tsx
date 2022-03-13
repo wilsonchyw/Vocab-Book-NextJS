@@ -1,7 +1,7 @@
 import { setEdit } from 'components/slices';
 import useAgent from "lib/useAgent";
 import type { Vocab } from "lib/vocab";
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent, useMemo ,useState,useRef,useEffect} from "react";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import ActionBar from "./ActionBar";
@@ -11,7 +11,6 @@ import { RootState } from '/store';
 
 type props = {
     datas: Array<Vocab>
-    mutate: Function
 }
 
 function isWithinRange(date: string | number, offset: number): boolean {
@@ -23,7 +22,7 @@ function isWithinRange(date: string | number, offset: number): boolean {
     return date > start && date < end
 }
 
-const Datalist: FunctionComponent = ({ datas, mutate }: props) => {
+const Datalist: FunctionComponent = ({ datas }: props) => {
     const isMobile = useAgent()
     const dispatch = useDispatch()
 
@@ -60,7 +59,8 @@ const Datalist: FunctionComponent = ({ datas, mutate }: props) => {
                 .map((data, index) => (
                     <Card key={data.id} className="shadow rounded zoom mouseover" >
                         <DataRow data={data} handleEdit={handleEdit} isMobile={isMobile} visable={visable} />
-                    </Card>))
+                    </Card>
+                    ))
             }
         </>
     )

@@ -4,9 +4,10 @@ import getConfig from "next/config";
 import errorHandler from "./errorHandler";
 import getLocalToken from "./localToken";
 import verifier, { VerifiedObj } from "./verifier";
+import Router from "next/router";
 const { publicRuntimeConfig } = getConfig();
 
-async function fetchHandler(option: VerifiedObj, callback: Function | null = null) {
+async function fetchHandler(option: VerifiedObj, callback: Function | null = null, publicRoute: Boolean = false) {
     try {
         verifier.atLeast(["url"], option);
         const localToken = getLocalToken()
@@ -21,7 +22,8 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
         if (response.data) {
             return callback ? callback(response.data) : response.data;
         }
-    } catch (err) {
+    } catch (err: any) {
+        if (err.message === "Cannot read properties of null (reading 'getIdToken')") return Router.push("/login");
         localStorage.removeItem("token")
         errorHandler(err);
     }

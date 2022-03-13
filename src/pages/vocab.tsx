@@ -1,22 +1,25 @@
 import Datalist from "components/datalist";
 import Dialog from "components/Dialog";
 import Loading from "components/Loading";
-import { setVocabs } from 'components/slices/userSlice';
+import { setVocabLength } from 'components/slices/userSlice';
 import apiHandler from "lib/fetchHandler";
 import type { NextPage } from "next";
 import { Stack } from "react-bootstrap";
-import { store } from "store";
-import useSWR from 'swr';
+import { RootState, store } from "store";
+import useSWR, { useSWRConfig } from 'swr'
 import LOG from "lib/log"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { setMessage } from "components/slices/messageSlice";
+import axios from "axios";
+import NavBar from "components/NavBar";
+import { useDispatch, useSelector } from 'react-redux';
+import type { Vocab } from "lib/vocab";
+import { useRouter } from "next/router";
+import getLocalToken from "lib/localToken";
+import { firebase } from "lib/firebaseInit";
 
 const LAST_UPDATE_DATE = 1646744035854
-const UPDATE = `Due to database error, datas saved in 7/3 corrupted. Sorry
-
-Meanwhile, this app could speak multiple languages now.
-Check it out in the profile button👉
-`
+const UPDATE = ``
 
 function shoudShowUpdate(): Boolean {
     if (typeof window !== "undefined") {
@@ -27,30 +30,31 @@ function shoudShowUpdate(): Boolean {
 }
 
 async function fetcher(url: string) {
+    console.log("using fetcher")
     const option = { url: url }
-    //LOG("Fetching data from server")
     const result = await apiHandler(option)
-    store.dispatch(setVocabs(result.length))
+    store.dispatch(setVocabLength(result.length))
     return result;
 }
 
 function Frame(): NextPage {
-    const { data, mutate } = useSWR("/vocab", fetcher);
+    const { vocabs } = useSelector((state: RootState) => state.user)
+    const { data, mutate } = useSWR("/vocab", vocabs ? () => [...vocabs] : fetcher)
 
     useEffect(() => {
-        //LOG("useEffect call")
         if (shoudShowUpdate()) {
-            store.dispatch(setMessage({ message: UPDATE ,duration:999}))
+            store.dispatch(setMessage({ message: UPDATE, duration: 999 }))
             localStorage.setItem("lastseen", String(Date.now()))
         }
     }, [])
 
     return (
         <>
+            <NavBar />
             <div className="hero"></div>
             <Dialog mutate={mutate} />
             <Stack gap={2} className="col-md-10 mx-auto content vstack gap-2 p-3">
-                {!data ? <Loading /> : <Datalist datas={data} mutate={mutate} />
+                {!data ? <Loading /> : <Datalist datas={data} />
                 }
             </Stack>
         </>

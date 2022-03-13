@@ -1,4 +1,4 @@
-import { changeVocab, handleHide, setExample, setInflection, setMessage } from 'components/slices';
+import { changeVocab, handleHide, setExample, setInflection, setMessage, setVocabs } from 'components/slices';
 import apiHandler from "lib/fetchHandler";
 import type { Inflection } from "lib/vocab";
 import React, { FunctionComponent, useState } from 'react';
@@ -32,7 +32,7 @@ const InflectionComponent: FunctionComponent<InflectionComponentProp> = ({ inf, 
 const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
     const dispatch = useDispatch()
     const [isloading, setLoading] = useState<Boolean>(false)
-    const {show, isEdit, vocab, inflection, example} = useSelector((state: RootState) => state.dialog)
+    const { show, isEdit, vocab, inflection, example } = useSelector((state: RootState) => state.dialog)
 
     const handleClose = () => {
         setLoading(false)
@@ -69,7 +69,8 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
         const method = isEdit ? "put" : "post"
         const option = { url: "/vocab", method: method, data: data }
         apiHandler(option, () => {
-            store.dispatch(setMessage(`${isEdit ? "Edit" : "Create"} ${vocab.vocabulary} success`));
+            dispatch(setMessage(`${isEdit ? "Edit" : "Create"} ${vocab.vocabulary} success`));
+            dispatch(setVocabs(null))
             handleClose()
             mutate()
         })
@@ -78,11 +79,12 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
     const handleDelete = () => {
         const option = { url: "/vocab", method: "delete", data: { id: vocab.id } }
         confirm(`Confirm delete ${vocab.vocabulary}?`) &&
-            apiHandler(option, () => {
-                store.dispatch(setMessage(`Delete ${vocab.vocabulary} success`));
-                handleClose()
-                mutate()
-            })
+        apiHandler(option, () => {
+            dispatch(setMessage(`Delete ${vocab.vocabulary} success`));
+            dispatch(setVocabs(null))
+            handleClose()
+            mutate()
+        })
     }
 
 

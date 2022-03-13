@@ -1,8 +1,8 @@
+import { setMessage } from 'components/slices/messageSlice';
 import { FunctionComponent, useEffect } from 'react';
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { setMessage } from 'components/slices/messageSlice';
 
 
 const Message: FunctionComponent = () => {
@@ -11,6 +11,7 @@ const Message: FunctionComponent = () => {
     const handleClose = () => dispatch(setMessage({ message: "", duration: null }))
 
     useEffect(() => {
+        console.log(message)
         setTimeout(() => { if (message) handleClose() }, duration || 5000)
     })
 

@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Loading from "components/Loading";
 import Message from "components/Message";
-import NavBar from "components/NavBar";
 import { setUser } from 'components/slices/userSlice';
 import 'firebase/compat/auth';
 import { firebase } from "lib/firebaseInit";
@@ -12,35 +11,39 @@ import { useEffect, useState } from "react";
 import SSRProvider from 'react-bootstrap/SSRProvider';
 import { Provider } from 'react-redux';
 import { store } from "store";
-import '../styles/custom.css';
-import '../styles/globals.css';
+import 'styles/custom.css';
+import 'styles/globals.css';
 
-
+const publicRoute = ["/", "/login"]
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter()
     const [hideContent, setHideContent] = useState<Boolean>(true);
 
 
-    async function authCheck() {
-        if (router.pathname === "/login") return setHideContent(false)
+    function authCheck() {
+        if (publicRoute.includes(router.pathname)) return setHideContent(false)
         if (getLocalToken()) setHideContent(false)
-        //LOG("Local token found")
+
         firebase.auth().onIdTokenChanged((user: firebase.user) => {
-            //LOG("Firebase user check")
             if (user) {
-                //LOG("firebase user found")
-                localStorage.setItem("expirationTime",user._delegate.stsTokenManager.expirationTime)
+                setHideContent(false)
+                localStorage.setItem("token", user._delegate.stsTokenManager.accessToken)
+                localStorage.setItem("expirationTime", user._delegate.stsTokenManager.expirationTime)
                 store.dispatch(setUser(user.displayName))
             } else {
                 store.dispatch(setUser(null))
-                return router.push("/login")
+                router.push("/login")
             }
-            setHideContent(false)
         });
     }
 
     useEffect(() => {
+        //router.events.on('routeChangeStart', handleStart)
+        /**
+         * Not using 'routeChangeStart' so that useSWR in Vocab page could jumping a gun before the component os mounted.
+         * fetchHandler and server would handle the authen check.
+         */
         authCheck()
     }, [router.pathname])
 
@@ -48,8 +51,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <SSRProvider>
             <Provider store={store} >
                 <Message />
-                <NavBar />
                 {!hideContent ? <Component {...pageProps} /> : <Loading />
+                    //<Component {...pageProps} />
                 }
             </Provider>
         </SSRProvider>

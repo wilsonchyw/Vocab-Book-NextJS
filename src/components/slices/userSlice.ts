@@ -1,22 +1,33 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import type { Vocab } from "lib/vocab";
 const REVISION_INTERVAL = "revisionInterval"
 const AUTO_PLAY = "auto_play"
 
 export interface userState {
     user: String | null;
-    vocabs: Number;
+    isLogin:Boolean;
+    vocabs: Vocab[] | null;
+    vocabLength:number;
     dialog: Boolean;
     revisionInterval: Number[];
-    autoPlay: Boolean
+    autoPlay: {
+        onCorrect: Boolean,
+        onVerifierClick: Boolean,
+        [key: string]: Boolean
+    }
 }
 
 const initialState: userState = {
     user: null,
-    vocabs: 0,
+    isLogin:false,
+    vocabs: null,
+    vocabLength:0,
     dialog: false,
     revisionInterval: getFromLocal(REVISION_INTERVAL, [1, 2, 7, 21, 30]),
-    autoPlay: getFromLocal(AUTO_PLAY,false)
+    autoPlay: (() => {
+        const data = getFromLocal(AUTO_PLAY, {})
+        return data.hasOwnProperty('onCorrect') ? data : { onCorrect: false, onVerifierClick: false }
+    })()
 };
 
 function saveLocal(key: string, value: any) {
@@ -40,15 +51,22 @@ export const userSlice = createSlice({
         setUser: (state: userState, action: PayloadAction<Object>) => {
             state.user = action.payload;
         },
-        setVocabs: (state: userState, action: PayloadAction<Object>) => {
-            state.vocabs = action.payload;
+        setVocabLength: (state: userState, action: PayloadAction<number>) => {
+            state.vocabLength = action.payload;
+        },
+        setLogin:(state:userState,action: PayloadAction<Boolean>)=>{
+            state.isLogin = action.payload
+        },
+        setVocabs:(state:userState,action: PayloadAction<Vocab[]>)=>{
+            state.vocabs = action.payload
+            state.vocabLength = action.payload.length
         },
         toggleDialog: (state: userState) => {
             state.dialog = !state.dialog;
         },
-        toggleAutoPlay: (state: userState)=>{            
-            state.autoPlay = !state.autoPlay
-            saveLocal(AUTO_PLAY,state.autoPlay)
+        toggleAutoPlay: (state: userState, action: PayloadAction<string>) => {
+            state.autoPlay[action.payload] = !state.autoPlay[action.payload]
+            saveLocal(AUTO_PLAY, state.autoPlay)
         },
         setRevisionInterval: (state: userState, action: PayloadAction<Number>) => {
             const index = state.revisionInterval.indexOf(action.payload);
@@ -59,6 +77,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { setUser, setVocabs, toggleDialog, setRevisionInterval, toggleAutoPlay } = userSlice.actions;
+export const { setUser,  toggleDialog, setRevisionInterval, toggleAutoPlay ,setLogin,setVocabs,setVocabLength} = userSlice.actions;
 //export default userSlice.reducer;
 export const userReducer = userSlice.reducer;

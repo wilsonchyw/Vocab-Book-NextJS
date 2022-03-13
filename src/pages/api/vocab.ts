@@ -31,7 +31,7 @@ const vocabController: controller = {
 async function getVocab(req: NextApiRequest) {
     const cache = await redis.get(req.user);
     if (cache) {
-        LOG("return from redis");
+        LOG(`return from redis ${req.user}`);
         return cache;
     } else {
         const result = await getKnex().select(["id", "type", "meaning", "vocabulary", "inflection", "createAt", "example"]).from("vocab").where("user", req.user);

@@ -30,7 +30,11 @@ type visable = {
 type verifierProps = {
     word: string,
     setVisable: Function,
-    autoPlay: Boolean
+    autoPlay: {
+        onCorrect: Boolean,
+        onVerifierClick: Boolean,
+        [key: string]: Boolean
+    }
 }
 
 const Verifier: FunctionComponent = ({ word, setVisable, autoPlay }: verifierProps) => {
@@ -38,14 +42,18 @@ const Verifier: FunctionComponent = ({ word, setVisable, autoPlay }: verifierPro
     const verifyInput = (input: string) => {
         setAnswer(input)
         if (input === word) {
-            if (autoPlay) speak(word)
+            if (autoPlay.onCorrect) speak(word)
             setVisable({ vocab: true, meaning: true })
         }
     }
 
     return (
         <div>
-            <input onChange={(e) => verifyInput(e.target.value)} onClick={() => speak(word)} className="form-control form-control-sm w-75 d-inline"></input>
+            <input
+                onChange={(e) => verifyInput(e.target.value)}
+                onClick={() => { if (autoPlay.onVerifierClick) speak(word) }}
+                className="form-control form-control-sm w-75 d-inline">
+            </input>
             {answer ? answer === word ? <CheckIcon color="primary" /> : <ClearIcon color="danger" /> : ""}
         </div>
     )

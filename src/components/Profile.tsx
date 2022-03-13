@@ -1,5 +1,5 @@
 import Divider from 'components/Divider';
-import { changeFilterType, toggleDialog,toggleAutoPlay } from "components/slices";
+import { changeFilterType, toggleDialog, toggleAutoPlay } from "components/slices";
 import { setRevisionInterval } from "components/slices/userSlice";
 import VoiceSetting from "components/VoiceSetting";
 import { firebase } from 'lib/firebaseInit';
@@ -7,16 +7,19 @@ import { FunctionComponent } from 'react';
 import { Button, ButtonGroup, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
+import { useRouter } from "next/router";
 
 const intervals = [0, 1, 2, 3, 7, 14, 21, 30, 60]
 
 const Profile: FunctionComponent = () => {
+    const route = useRouter()
     const dispatch = useDispatch()
-    const { dialog, user, vocabs,autoPlay, revisionInterval, filterType } = useSelector((state: RootState) => ({ ...state.user, ...state.list }))
+    const { dialog, user, vocabLength, autoPlay, revisionInterval, filterType } = useSelector((state: RootState) => ({ ...state.user, ...state.list }))
     const signout = (): void => {
         toggle()
+        route.push("/")
         localStorage.removeItem("token")
-        firebase.auth().signOut()
+        firebase.auth().signOut()        
     }
     const changeMode = (type: string): void => {
         dispatch(changeFilterType(type))
@@ -33,7 +36,7 @@ const Profile: FunctionComponent = () => {
                 {user &&
                     <>
                         <Card.Text>
-                            {`You have learnt ${vocabs} words`}
+                            {`You have learnt ${vocabLength} words`}
                             <Divider content="mode" className="mx-1" />
                             <Button variant={filterType === "keyword" ? "primary" : "light"} onClick={() => changeMode("keyword")} size="sm">All words</Button>
                             <br />
@@ -45,11 +48,12 @@ const Profile: FunctionComponent = () => {
                                         {intervals.map(interval =>
                                             <Button variant={revisionInterval.includes(interval) ? "primary" : "light"} onClick={() => dispatch(setRevisionInterval(interval))} key={interval}>{interval}</Button>
                                         )}
-                                    </ButtonGroup>                                    
+                                    </ButtonGroup>
                                 </>
                             }
-                            <Divider content="Speak if input correct" className="mx-1" />
-                            <Button variant={autoPlay ? "primary" : "light"} onClick={() => dispatch(toggleAutoPlay())} size="sm">Auto play</Button>
+                            <Divider content="Auto play" className="mx-1" />
+                            <Button variant={autoPlay.onCorrect ? "primary" : "light"} onClick={() => dispatch(toggleAutoPlay('onCorrect'))} size="sm">Input correct</Button>
+                            <Button variant={autoPlay.onVerifierClick ? "primary" : "light"} onClick={() => dispatch(toggleAutoPlay('onVerifierClick'))} size="sm">Verifier click</Button>
                             <VoiceSetting />
                         </Card.Text>
                         <hr className="my-12" />
