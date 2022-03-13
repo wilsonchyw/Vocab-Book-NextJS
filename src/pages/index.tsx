@@ -9,7 +9,6 @@ import getLocalToken from 'lib/localToken';
 import ReactPageScroller from 'lib/react-page-scroller';
 import type { Vocab } from 'lib/vocab';
 import type { NextPage } from "next";
-import Image from 'next/image';
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { Stack } from 'react-bootstrap';
@@ -102,7 +101,7 @@ function FirstComponent(): FunctionComponent {
                         </div>
                     </div>
                     <div className="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
-                        <Image alt="Vocabsitory" src="/screenshot4.png" width={550} height={400} />
+                        <img width={550} height={400} src="/screenshot4.png" alt="Vocabsitory" />
                     </div>
                 </div>
             </div>
@@ -116,7 +115,7 @@ function SecondComponent(): FunctionComponent {
             <div className="container ">
                 <div className="row gx-5 align-items-center justify-content-center">
                     <div className="col-lg-6 ">
-                        <Image alt="forgetting curve" src="/forgetting-curve.png" width={700} height={500} />
+                        <img width={700} height={500} src="/forgetting-curve.png" alt="forgetting curve" />
                     </div>
                     <div className="col-lg-8 col-xl-7 col-xxl-6">
                         <div className="my-5 text-center text-xl-start">
