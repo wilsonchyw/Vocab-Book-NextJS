@@ -128,3 +128,5 @@ dist
 
 oracle/wallet/*
 *.pem
+sw.js.map
+sw.js.*
