@@ -46,7 +46,7 @@ const VoiceSetting: FunctionComponent = () => {
         <>
             <Divider content="voice" />
             <Dropdown className="mt-1">
-                <Dropdown.Toggle variant="primary" id="dropdown-basic" size="sm">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
                     <span>{name}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu variant="secondary">

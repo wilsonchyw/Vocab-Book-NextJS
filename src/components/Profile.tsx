@@ -38,29 +38,32 @@ const Profile: FunctionComponent = () => {
                         <Card.Text>
                             {`You have learnt ${vocabLength} words`}
                             <Divider content="mode" className="mx-1" />
-                            <Button variant={filterType === "keyword" ? "primary" : "light"} onClick={() => changeMode("keyword")} size="sm">All words</Button>
+                            <Button variant={filterType === "keyword" ? "secondary" : "light"} onClick={() => changeMode("keyword")} size="sm">All words</Button>
                             <br />
-                            <Button variant={filterType === "forgettingCurve" ? "primary" : "light"} onClick={() => changeMode("forgettingCurve")} size="sm">Revision</Button>
+                            <Button variant={filterType === "forgettingCurve" ? "secondary" : "light"} onClick={() => changeMode("forgettingCurve")} size="sm">Revision</Button>
                             {filterType === "forgettingCurve" &&
                                 <>
                                     <Divider content="interval (days)" className="mx-1" />
                                     <ButtonGroup className="me-2" aria-label="First group" size="sm">
                                         {intervals.map(interval =>
-                                            <Button variant={revisionInterval.includes(interval) ? "primary" : "light"} onClick={() => dispatch(setRevisionInterval(interval))} key={interval}>{interval}</Button>
+                                            <Button variant={revisionInterval.includes(interval) ? "secondary" : "light"} onClick={() => dispatch(setRevisionInterval(interval))} key={interval}>{interval}</Button>
                                         )}
                                     </ButtonGroup>
                                 </>
                             }
                             <Divider content="Auto play" className="mx-1" />
-                            <Button variant={autoPlay.onCorrect ? "primary" : "light"} onClick={() => dispatch(toggleAutoPlay('onCorrect'))} size="sm">Input correct</Button>
-                            <Button variant={autoPlay.onVerifierClick ? "primary" : "light"} onClick={() => dispatch(toggleAutoPlay('onVerifierClick'))} size="sm">Verifier click</Button>
+                            <Button variant={autoPlay.onCorrect ? "secondary" : "light"} onClick={() => dispatch(toggleAutoPlay('onCorrect'))} size="sm">Input correct</Button>
+                            <Button variant={autoPlay.onVerifierClick ? "secondary" : "light"} onClick={() => dispatch(toggleAutoPlay('onVerifierClick'))} size="sm">Verifier click</Button>
                             <VoiceSetting />
+                            <Divider content="Learning progress" className="mx-1" />
+                            <Button variant="secondary" onClick={() => route.push('/chart')} size="sm">View</Button>
+
                         </Card.Text>
                         <hr className="my-12" />
-                        <Button variant="primary" onClick={signout} size="sm">Logout</Button>{' '}
+                        <Button variant="danger" onClick={signout} size="sm">Logout</Button>{' '}
                     </>
                 }
-                <Button variant="primary" onClick={toggle} size="sm">Dismiss</Button>
+                <Button variant="secondary" onClick={toggle} size="sm">Dismiss</Button>
             </Card.Body>
         </Card>
     )

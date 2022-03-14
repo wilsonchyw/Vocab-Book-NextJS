@@ -25,7 +25,7 @@ type dateMap = {
 
 const DAY = 1000 * 60 * 60 * 24
 const DATASET_NAME = ['verb', 'noun', 'adverb', 'adjective', 'other']
-const COLORS = ['#e9ecef', '#dee2e6', '#adb5bd', '#495057', '#212529']
+const COLORS = ['#212529', '#495057', '#adb5bd', '#dee2e6', '#e9ecef']
 
 const options = {
     plugins: {
@@ -92,6 +92,8 @@ function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
     }
 
     const data = initChartData()
+
+    console.log(data)
 
     return (
         <>

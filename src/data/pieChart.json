@@ -1,0 +1,28 @@
+{
+    "labels": [
+        "verb",
+        "noun",
+        "adverb",
+        "adjective",
+        "other"
+    ],
+    "datasets": [
+        {
+            "data": [
+                175,
+                380,
+                9,
+                160,
+                34
+            ],
+            "backgroundColor": [
+                "#e9ecef",
+                "#dee2e6",
+                "#adb5bd",
+                "#495057",
+                "#212529"
+            ],
+            "borderWidth": 0
+        }
+    ]
+}
