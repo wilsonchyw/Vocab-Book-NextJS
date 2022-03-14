@@ -65,12 +65,11 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
 
         const data = { ...vocab, inflection: JSON.stringify(inflection) }
         if (example.length) data.example = JSON.stringify(example.filter(x => x != ""))
-        console.log(data)
         const method = isEdit ? "put" : "post"
         const option = { url: "/vocab", method: method, data: data }
         apiHandler(option, () => {
             dispatch(setMessage(`${isEdit ? "Edit" : "Create"} ${vocab.vocabulary} success`));
-            dispatch(setVocabs(null))
+            //dispatch(setVocabs(null))
             handleClose()
             mutate()
         })
@@ -81,7 +80,7 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
         confirm(`Confirm delete ${vocab.vocabulary}?`) &&
         apiHandler(option, () => {
             dispatch(setMessage(`Delete ${vocab.vocabulary} success`));
-            dispatch(setVocabs(null))
+            //dispatch(setVocabs(null))
             handleClose()
             mutate()
         })

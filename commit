@@ -1,2 +1,2 @@
-Fix _document.tsx header error
-Fix chart.tsx missing useMemo dependency 
+Fix firebase loading bug
+Update Manifest

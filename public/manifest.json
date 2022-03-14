@@ -2,7 +2,7 @@
   "name": "Vocab Repository",
   "short_name": "Vocabsitory",
   "description": "A vocab repository",
-  "display": "fullscreen",
+  "display": "standalone",
   "icons": [
     {
       "src": "/icon-192x192.png",

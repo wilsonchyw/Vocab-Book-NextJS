@@ -11,7 +11,7 @@ const Message: FunctionComponent = () => {
     const handleClose = () => dispatch(setMessage({ message: "", duration: null }))
 
     useEffect(() => {
-        console.log(message)
+        //console.log(message)
         setTimeout(() => { if (message) handleClose() }, duration || 5000)
     })
 

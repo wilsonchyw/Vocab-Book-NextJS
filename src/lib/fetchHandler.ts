@@ -23,7 +23,8 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
             return callback ? callback(response.data) : response.data;
         }
     } catch (err: any) {
-        if (err.message === "Cannot read properties of null (reading 'getIdToken')") return Router.push("/login");
+        //console.log(err)
+        if (err.message.match(/null|reading|getIdToken/g)) return
         localStorage.removeItem("token")
         errorHandler(err);
     }
