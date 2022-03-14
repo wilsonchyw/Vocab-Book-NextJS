@@ -1,3 +1,2 @@
-Add link to learning progress 
-Modifity divider color
-Add content in home page
+Fix _document.tsx header error
+Fix chart.tsx missing useMemo dependency 

@@ -6,6 +6,7 @@ import 'firebase/compat/auth';
 import { firebase } from "lib/firebaseInit";
 import getLocalToken from 'lib/localToken';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SSRProvider from 'react-bootstrap/SSRProvider';
@@ -49,6 +50,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     return (
         <SSRProvider>
+            <Head>
+                <link rel="manifest" href="/manifest.json" />
+                <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
+                <title>Vocabsitory - Learn vocabulary in an efficient way</title>
+                <meta name="theme-color" content="#fff" />
+                <meta name="description" content="This is a vocabulary book app combined with the forgetting curve to learn new words. Create your vocab book here and make revisions in any device"/>
+            </Head>
             <Provider store={store} >
                 <Message />
                 {!hideContent ? <Component {...pageProps} /> : <Loading />

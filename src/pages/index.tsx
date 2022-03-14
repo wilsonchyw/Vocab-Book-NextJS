@@ -103,7 +103,7 @@ function FirstComponent(): FunctionComponent {
                         </div>
                     </div>
                     <div className="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
-                        <img class="w-100" src="/screenshot4.png" alt="Vocabsitory" />
+                        <img className="w-100" src="/screenshot4.png" alt="Vocabsitory" />
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@ function SecondComponent(): FunctionComponent {
             <div className="container ">
                 <div className="row gx-5 align-items-center justify-content-center">
                     <div className="col-lg-6 ">
-                        <img class="w-100" src="/forgetting-curve.png" alt="forgetting curve" />
+                        <img className="w-100" src="/forgetting-curve.png" alt="forgetting curve" />
                     </div>
                     <div className="col-lg-8 col-xl-7 col-xxl-6">
                         <h2 className="fw-bolder text-center text-xxl-start">Forgetting curve</h2>

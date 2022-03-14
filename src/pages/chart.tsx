@@ -46,7 +46,7 @@ function processData(vocabs: Vocab[]): any {
 function Chart(): NextPage {
     const { vocabs } = useSelector((state: RootState) => state.user)
     const { data } = useSWR("/vocab", vocabs ? () => [...vocabs] : fetcher)
-    const dateMap = useMemo(() => processData(data), data)
+    const dateMap = useMemo(() => processData(data), [data])
 
     return (
         <>
