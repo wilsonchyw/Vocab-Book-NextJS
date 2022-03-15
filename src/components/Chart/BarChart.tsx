@@ -6,6 +6,7 @@ import {
     BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title,
     Tooltip
 } from 'chart.js';
+import useAgent from 'lib/useAgent';
 import { FunctionComponent, useState } from 'react';
 import { Button, ButtonGroup, Col, Row } from "react-bootstrap";
 import { Bar } from 'react-chartjs-2';
@@ -44,7 +45,7 @@ const options = {
             }
         },
     },
-    responsive: true,
+    maintainAspectRatio: false,
     scales: {
         x: {
             stacked: true,
@@ -69,10 +70,10 @@ const options = {
 
 
 function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
-
     const [startDay, setStart] = useState<string>(new Date().toLocaleDateString())
     const [weekly, setWeekly] = useState<boolean>(true)
 
+    console.log("useAgent()", useAgent())
     const initChartData = (): { labels: string[], datasets: object } => {
         const labels: string[] = Array(weekly ? 7 : 30).fill(null).map((_, index) => new Date(new Date(startDay) - DAY * index).toLocaleDateString()).reverse()
         return {
@@ -93,9 +94,8 @@ function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
 
     const data = initChartData()
     options.plugins.title.text = `Daily distribution from ${data.labels[0]} ~ ${data.labels.slice(-1)}`
-
     return (
-        <>
+        <div className="col-12 col-md-8 mt-4" style={{ zIndex: 99 }}>
             <Row className="text-white" style={{ zIndex: 99 }} >
                 <Col className="d-flex align-items-center">
                     <FastRewindIcon fontSize={'medium'} onClick={() => dayShift(weekly ? -7 : -30)} />
@@ -112,8 +112,11 @@ function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
                     <FastForwardIcon fontSize={'medium'} onClick={() => dayShift(weekly ? 7 : 30)} />
                 </Col>
             </Row>
-            <Bar options={options} data={data} style={{ zIndex: 99 }} />
-        </>
+            <div style={{ height: "50vh", width: "100%" }} >
+                <Bar options={options} data={data} style={{ zIndex: 99 }} />
+            </div>
+
+        </div>
     )
 }
 

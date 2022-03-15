@@ -23,9 +23,7 @@ const options = {
             },
         },
         legend: {
-            labels: {
-                color: "white",
-            }
+            display:false,
         },
     },
     responsive: true,
