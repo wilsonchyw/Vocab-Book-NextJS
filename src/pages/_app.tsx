@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Loading from "components/Loading";
 import Message from "components/Message";
-import { setUser } from 'components/slices/userSlice';
+import { setUser,setLogin } from 'components/slices/userSlice';
 import 'firebase/compat/auth';
 import { firebase } from "lib/firebaseInit";
 import getLocalToken from 'lib/localToken';
@@ -23,14 +23,19 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
     function authCheck() {
+        if (getLocalToken() && router.pathname=="/")  {
+            router.push("/vocab")//setHideContent(false)
+            store.dispatch(setLogin(true))
+        }
         if (publicRoute.includes(router.pathname)) return setHideContent(false)
-        if (getLocalToken()) setHideContent(false)
+        
 
         firebase.auth().onIdTokenChanged((user: firebase.user) => {
             if (user) {
                 setHideContent(false)
                 localStorage.setItem("token", user._delegate.stsTokenManager.accessToken)
                 localStorage.setItem("expirationTime", user._delegate.stsTokenManager.expirationTime)
+                store.dispatch(setLogin(true))
                 store.dispatch(setUser(user.displayName))
             } else {
                 store.dispatch(setUser(null))
@@ -55,7 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
                 <title>Vocabsitory - Learn vocabulary in an efficient way</title>
                 <meta name="theme-color" content="#fff" />
-                <meta name="description" content="This is a vocabulary book app combined with the forgetting curve to learn new words. Create your vocab book here and make revisions in any device"/>
+                <meta name="description" content="This is a vocabulary book app combined with the forgetting curve to learn new words. Create your vocab book here and make revisions in any device" />
             </Head>
             <Provider store={store} >
                 <Message />

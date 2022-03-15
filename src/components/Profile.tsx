@@ -1,5 +1,5 @@
 import Divider from 'components/Divider';
-import { changeFilterType, toggleDialog, toggleAutoPlay } from "components/slices";
+import { changeFilterType, toggleDialog, toggleAutoPlay, setLogin } from "components/slices";
 import { setRevisionInterval } from "components/slices/userSlice";
 import VoiceSetting from "components/VoiceSetting";
 import { firebase } from 'lib/firebaseInit';
@@ -18,8 +18,9 @@ const Profile: FunctionComponent = () => {
     const signout = (): void => {
         toggle()
         route.push("/")
+        dispatch(setLogin(false))
         localStorage.removeItem("token")
-        firebase.auth().signOut()        
+        firebase.auth().signOut()
     }
     const changeMode = (type: string): void => {
         dispatch(changeFilterType(type))

@@ -23,8 +23,7 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
             return callback ? callback(response.data) : response.data;
         }
     } catch (err: any) {
-        //console.log(err)
-        if (err.message.match(/null|reading|getIdToken/g)) return
+        if (err.message.match(/null|reading|getIdToken/g)) err.prototype.toString = () => "Something wrong, please wait.."
         localStorage.removeItem("token")
         errorHandler(err);
     }

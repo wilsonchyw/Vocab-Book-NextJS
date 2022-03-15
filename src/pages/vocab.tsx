@@ -1,22 +1,14 @@
 import Datalist from "components/datalist";
 import Dialog from "components/Dialog";
 import Loading from "components/Loading";
+import NavBar from "components/NavBar";
 import { setVocabLength } from 'components/slices/userSlice';
 import apiHandler from "lib/fetchHandler";
 import type { NextPage } from "next";
 import { Stack } from "react-bootstrap";
+import { useSelector } from 'react-redux';
 import { RootState, store } from "store";
-import useSWR, { useSWRConfig } from 'swr'
-import LOG from "lib/log"
-import { useEffect, useState } from "react"
-import { setMessage } from "components/slices/messageSlice";
-import axios from "axios";
-import NavBar from "components/NavBar";
-import { useDispatch, useSelector } from 'react-redux';
-import type { Vocab } from "lib/vocab";
-import { useRouter } from "next/router";
-import getLocalToken from "lib/localToken";
-import { firebase } from "lib/firebaseInit";
+import useSWR from 'swr';
 
 const LAST_UPDATE_DATE = 1646744035854
 const UPDATE = ``
@@ -30,23 +22,25 @@ function shoudShowUpdate(): Boolean {
 }
 
 async function fetcher(url: string) {
-    console.log("using fetcher")
     const option = { url: url }
     const result = await apiHandler(option)
+
     store.dispatch(setVocabLength(result.length))
     return result;
 }
 
 function Frame(): NextPage {
-    const { vocabs } = useSelector((state: RootState) => state.user)
-    const { data, mutate } = useSWR("/vocab", vocabs ? () => [...vocabs] : fetcher)
+    const { vocabs, isLogin } = useSelector((state: RootState) => state.user)
+    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher)
 
+    /**
     useEffect(() => {
         if (shoudShowUpdate()) {
             store.dispatch(setMessage({ message: UPDATE, duration: 999 }))
             localStorage.setItem("lastseen", String(Date.now()))
         }
     }, [])
+     */
 
     return (
         <>

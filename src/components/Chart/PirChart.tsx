@@ -8,9 +8,9 @@ type dateMap = {
     [key: string]: Map<string, number>
 }
 
-const DAY = 1000 * 60 * 60 * 24
 const DATASET_NAME = ['verb', 'noun', 'adverb', 'adjective', 'other']
-const COLORS = ['#212529', '#495057', '#adb5bd', '#dee2e6', '#e9ecef']
+//const COLORS = ['#212529', '#495057', '#adb5bd', '#dee2e6', '#e9ecef']
+const COLORS = ['#3498DB', '#FFD600', '#2ECC71', '#E74C3C', '#BDC3C7']
 
 const options = {
     plugins: {
@@ -34,7 +34,6 @@ const options = {
 
 function PirChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
     const initData = () => {
-        console.log("initData call")
         return {
             labels: DATASET_NAME,
             datasets: [{
@@ -44,8 +43,6 @@ function PirChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
             }]
         };
     }
-
-    console.log("Pirchart",initData())
 
     return (
         <div style={{ zIndex: 99 }} className="col-12 col-md-6 mt-4">

@@ -9,14 +9,13 @@ import {
 } from 'chart.js';
 import { setVocabs } from 'components/slices';
 import barChartData from "data/barChart.json";
-import pieChartData from "data/pieChart.json";
 import apiHandler from "lib/fetchHandler";
 import getLocalToken from 'lib/localToken';
 import type { Vocab } from 'lib/vocab';
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { useDispatch } from 'react-redux';
 
 ChartJS.register(
@@ -55,7 +54,6 @@ function Index(): NextPage {
 
     function fetchData() {
         apiHandler({ url: "/vocab" }, (result: Vocab[]) => {
-            console.log(result)
             dispatch(setVocabs(result))
         })
     }
@@ -68,7 +66,7 @@ function Index(): NextPage {
         <>
             <FadeInSection height={75}>
                 <FirstComponent />
-            </FadeInSection>            
+            </FadeInSection>
             <FadeInSection height={75}>
                 <SecondComponent />
             </FadeInSection>

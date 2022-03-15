@@ -3,25 +3,24 @@ services:
     nextjs_dev:
         build:
             context: .
-            dockerfile: Dockerfile-dev5
+            dockerfile: Dockerfile-dev
         ports:
             - "5002:5002"
         volumes:
             - ".:/app"
             - "/app/node_modules"
-        links:
-            - redis
+        #links:
+        #    - redis
         environment:
             LD_LIBRARY_PATH: "/opt/oracle/instantclient_19_10"
             WALLET: "/app/oracle/wallet"            
-            API_ENDPOINT: "https://api.vocabsitory.site/api"
+            #API_ENDPOINT: "http://150.230.38.246:3000"
+            #"https://api.vocabsitory.site/api"
         image: nextjs_dev
         container_name: nextjs_dev
-        
-    redis:
-        restart: always
-        container_name: redis
-        image: redis:alpine
-        ports:
-            - "6379:6379"
-        command: [sh, -c, "rm -f /data/dump.rdb && redis-server --save ''"]
+        networks: 
+            - next-prod-networks
+networks:
+    next-prod-networks:
+        external:
+            name: vocab-book-nextjs_default

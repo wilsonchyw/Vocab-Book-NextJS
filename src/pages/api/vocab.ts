@@ -29,6 +29,7 @@ const vocabController: controller = {
 };
 
 async function getVocab(req: NextApiRequest) {
+    console.log("getVocab call")
     const cache = await redis.get(req.user);
     if (cache) {
         LOG(`return from redis ${req.user}`);

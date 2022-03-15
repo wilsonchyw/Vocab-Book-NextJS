@@ -25,13 +25,14 @@ type dateMap = {
 
 const DAY = 1000 * 60 * 60 * 24
 const DATASET_NAME = ['verb', 'noun', 'adverb', 'adjective', 'other']
-const COLORS = ['#212529', '#495057', '#adb5bd', '#dee2e6', '#e9ecef']
+//const COLORS = ['#212529', '#495057', '#adb5bd', '#dee2e6', '#e9ecef']
+const COLORS = ['#3498DB', '#FFD600', '#2ECC71', '#E74C3C', '#BDC3C7']
 
 const options = {
     plugins: {
         title: {
             display: true,
-            text: 'Daily distribution',
+            text: '',
             color: 'white',
             font: {
                 size: 20
@@ -72,7 +73,7 @@ function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
     const [startDay, setStart] = useState<string>(new Date().toLocaleDateString())
     const [weekly, setWeekly] = useState<boolean>(true)
 
-    const initChartData = (): object => {
+    const initChartData = (): { labels: string[], datasets: object } => {
         const labels: string[] = Array(weekly ? 7 : 30).fill(null).map((_, index) => new Date(new Date(startDay) - DAY * index).toLocaleDateString()).reverse()
         return {
             labels,
@@ -85,15 +86,13 @@ function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
     }
 
     const dayShift = (offset: number) => {
-        console.log(startDay, new Date().toLocaleDateString(), startDay == new Date().toLocaleDateString())
-        if (startDay == new Date().toLocaleDateString() && offset > 0) return
+        if (startDay >= new Date().toLocaleDateString() && offset > 0) return
         const day = new Date(new Date(startDay).getTime() + offset * DAY).toLocaleDateString()
         setStart(day)
     }
 
     const data = initChartData()
-
-    console.log(data)
+    options.plugins.title.text = `Daily distribution from ${data.labels[0]} ~ ${data.labels.slice(-1)}`
 
     return (
         <>

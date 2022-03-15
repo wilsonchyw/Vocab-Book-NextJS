@@ -18,7 +18,6 @@ type dateMap = {
 }
 
 async function fetcher(url: string) {
-    console.log("Fetching data")
     const option = { url: url }
     const result = await apiHandler(option)
     store.dispatch(setVocabLength(result.length))
