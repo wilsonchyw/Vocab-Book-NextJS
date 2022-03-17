@@ -70,12 +70,12 @@ const options = {
 
 
 function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
-    const [startDay, setStart] = useState<string>(new Date().toLocaleDateString())
+    const [startDay, setStart] = useState<string>(new Date().toLocaleDateString().replace(/-/g, "/"))
     const [weekly, setWeekly] = useState<boolean>(true)
 
     console.log("useAgent()", useAgent())
     const initChartData = (): { labels: string[], datasets: object } => {
-        const labels: string[] = Array(weekly ? 7 : 30).fill(null).map((_, index) => new Date(new Date(startDay) - DAY * index).toLocaleDateString()).reverse()
+        const labels: string[] = Array(weekly ? 7 : 30).fill(null).map((_, index) => new Date(new Date(startDay) - DAY * index).toLocaleDateString().replace(/-/g, "/")).reverse()
         return {
             labels,
             datasets: DATASET_NAME.map((name, index) => ({
@@ -87,8 +87,8 @@ function BarChart({ dateMap }: { dateMap: dateMap }): FunctionComponent {
     }
 
     const dayShift = (offset: number) => {
-        if (startDay >= new Date().toLocaleDateString() && offset > 0) return
-        const day = new Date(new Date(startDay).getTime() + offset * DAY).toLocaleDateString()
+        if (startDay >= new Date().toLocaleDateString().replace(/-/g, "/") && offset > 0) return
+        const day = new Date(new Date(startDay).getTime() + offset * DAY).toLocaleDateString().replace(/-/g, "/")
         setStart(day)
     }
 
