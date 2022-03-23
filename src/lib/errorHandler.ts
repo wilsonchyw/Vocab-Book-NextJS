@@ -1,7 +1,6 @@
 import { setMessage } from "components/slices/messageSlice";
 import Router from "next/router";
 import { store } from "store";
-import LOG from "./log";
 
 function ErrorHandler(err: any) {
     //console.log(err.name)
@@ -9,6 +8,7 @@ function ErrorHandler(err: any) {
     if (err.response) {
         if (err.response.status === 401) {
             store.dispatch(setMessage({ type: "error", message: "Authentication fail" }));
+            localStorage.removeItem("token")
             return Router.push("/login");
         }
         if (err.response.data) {

@@ -3,7 +3,7 @@ export type Inflection = {
 };
 
 export type Vocab = {
-    id: string | null;
+    id: string;
     vocabulary: string;
     meaning: string;
     type: string;

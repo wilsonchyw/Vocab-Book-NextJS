@@ -1,10 +1,9 @@
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { Footer, FooterMobile } from "components/datalist/Footer";
+import Verifier from "components/datalist/Verifier";
 import speak from "lib/speak";
 import type { Vocab } from "lib/vocab";
 import React, { FunctionComponent, useEffect, useState } from 'react';
@@ -36,29 +35,6 @@ type verifierProps = {
         [key: string]: Boolean
     }
 }
-
-const Verifier: FunctionComponent = ({ word, setVisable, autoPlay }: verifierProps) => {
-    const [answer, setAnswer] = useState<string>("")
-    const verifyInput = (input: string) => {
-        setAnswer(input)
-        if (input === word) {
-            if (autoPlay.onCorrect) speak(word)
-            setVisable({ vocab: true, meaning: true })
-        }
-    }
-
-    return (
-        <div>
-            <input
-                onChange={(e) => verifyInput(e.target.value)}
-                onClick={() => { if (autoPlay.onVerifierClick) speak(word) }}
-                className="form-control form-control-sm w-75 d-inline">
-            </input>
-            {answer ? answer === word ? <CheckIcon color="primary" /> : <ClearIcon color="danger" /> : ""}
-        </div>
-    )
-}
-
 
 const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: rowProp) => {
     const [_visable, setVisable] = useState<visable>({})
@@ -107,7 +83,7 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: row
                     </span>
                 </Col>
                 <Col className="px-0" xs={2}>
-                    <Verifier word={data.vocabulary} setVisable={setVisable} autoPlay={autoPlay} />
+                    <Verifier vocab={data} setVisable={setVisable} autoPlay={autoPlay} />
                 </Col>
                 <Col onClick={() => setVisable({ ..._visable, vocab: !_visable.vocab })} className="px-0" xs={2}>
                     {_visable.vocab && data.vocabulary}

@@ -59,7 +59,8 @@ export const userSlice = createSlice({
         },
         setVocabs:(state:userState,action: PayloadAction<Vocab[]>)=>{
             state.vocabs = action.payload
-            state.vocabLength = action.payload.length
+            if(action.payload!= null)state.vocabLength = action.payload.length
+            
         },
         toggleDialog: (state: userState) => {
             state.dialog = !state.dialog;

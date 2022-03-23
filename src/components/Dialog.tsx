@@ -69,9 +69,9 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
         const option = { url: "/vocab", method: method, data: data }
         apiHandler(option, () => {
             dispatch(setMessage(`${isEdit ? "Edit" : "Create"} ${vocab.vocabulary} success`));
-            //dispatch(setVocabs(null))
-            handleClose()
+            dispatch(setVocabs(null))
             mutate()
+            handleClose()            
         })
     }
 
@@ -80,9 +80,9 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
         confirm(`Confirm delete ${vocab.vocabulary}?`) &&
         apiHandler(option, () => {
             dispatch(setMessage(`Delete ${vocab.vocabulary} success`));
-            //dispatch(setVocabs(null))
-            handleClose()
+            dispatch(setVocabs(null))
             mutate()
+            handleClose()            
         })
     }
 
