@@ -7,7 +7,7 @@ async function getClient() {
     try {
         if (!client) {
             client = createClient({
-                url: "redis://redis:6379",
+                url: "redis://redis:6378",
             });
             await client.connect();
             client.on("error", (err: any) => {

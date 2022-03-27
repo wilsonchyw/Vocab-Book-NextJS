@@ -14,6 +14,7 @@ const uiConfig = {
     callbacks: {
         signInSuccessWithAuthResult: (currentUser: any) => {
             localStorage.setItem("token", currentUser.user._delegate.accessToken)
+            localStorage.setItem("expirationTime", currentUser.user._delegate.expirationTime)
             return true
         },
     },

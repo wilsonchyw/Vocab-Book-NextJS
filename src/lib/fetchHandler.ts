@@ -12,8 +12,8 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
         verifier.atLeast(["url"], option);
         const localToken = getLocalToken()
         const token: string = localToken || await firebase.auth().currentUser.getIdToken();
-        if (!localToken) localStorage.setItem("token", token.includes("Bearer ") ? token : "Bearer " + token)
-        if (token) option.headers = { Authorization: token };
+        if (!localToken) localStorage.setItem("token", token)
+        if (token) option.headers = { Authorization: "Bearer " + token };
         if (!option.method) option.method = "get";
 
         const url = `${publicRuntimeConfig.endpoint}${option.url}`;

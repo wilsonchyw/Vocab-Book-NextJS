@@ -29,11 +29,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
         if (publicRoute.includes(router.pathname)) return setHideContent(false)
 
-
         firebase.auth().onIdTokenChanged((user: firebase.user) => {
             if (user) {
                 setHideContent(false)
-                localStorage.setItem("token", "Bearer " + user._delegate.stsTokenManager.accessToken)
+                localStorage.setItem("token", user._delegate.stsTokenManager.accessToken)
                 localStorage.setItem("expirationTime", user._delegate.stsTokenManager.expirationTime)
                 store.dispatch(setLogin(true))
                 store.dispatch(setUser(user.displayName))

@@ -126,7 +126,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-oracle/wallet/*
+oracle/*
 *.pem
 sw.js.map
 sw.js.*
