@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app';
+//import firebase from "firebase/app";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 

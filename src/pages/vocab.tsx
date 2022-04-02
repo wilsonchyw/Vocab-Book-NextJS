@@ -27,14 +27,13 @@ function shoudShowUpdate(): Boolean {
 async function fetcher(url: string) {
     const option = { url: url }
     const result = await apiHandler(option)
-
     store.dispatch(setVocabLength(result.length))
     return result;
 }
 
 function Frame(): NextPage {
     const { vocabs, isLogin } = useSelector((state: RootState) => state.user)
-    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher)
+    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher,{revalidateOnFocus: false})
 
 
     useEffect(() => {
