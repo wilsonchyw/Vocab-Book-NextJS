@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 localStorage.setItem("token", user._delegate.stsTokenManager.accessToken)
                 localStorage.setItem("expirationTime", user._delegate.stsTokenManager.expirationTime)
                 store.dispatch(setUser(user.displayName))
-                toVocab()
+                if(router.pathname == "/")toVocab()
             } else {
                 store.dispatch(setUser(null))
                 router.push("/login")
