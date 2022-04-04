@@ -22,16 +22,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     const [hideContent, setHideContent] = useState<Boolean>(true);
 
     function toVocab(){
-        if(router.pathname != "/vocab") router.push("/vocab")
+        if(publicRoute.includes(router.pathname)) router.push("/vocab")
         store.dispatch(setLogin(true))
         setHideContent(false)
     }
 
     function authCheck() {
-        if (getLocalToken()){
-            setHideContent(false)
-            if(router.pathname == "/") toVocab()
-        } 
+        if (getLocalToken()) toVocab()
 
         if (publicRoute.includes(router.pathname)) setHideContent(false)
 
@@ -40,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 localStorage.setItem("token", user._delegate.stsTokenManager.accessToken)
                 localStorage.setItem("expirationTime", user._delegate.stsTokenManager.expirationTime)
                 store.dispatch(setUser(user.displayName))
-                if(router.pathname == "/")toVocab()
+                toVocab()
             } else {
                 store.dispatch(setUser(null))
                 router.push("/login")
