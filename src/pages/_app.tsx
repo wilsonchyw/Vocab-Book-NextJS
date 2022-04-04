@@ -28,7 +28,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
 
     function authCheck() {
-        if (getLocalToken() && router.pathname == "/") toVocab()
+        if (getLocalToken()){
+            setHideContent(false)
+            if(router.pathname == "/") toVocab()
+        } 
 
         if (publicRoute.includes(router.pathname)) setHideContent(false)
 
