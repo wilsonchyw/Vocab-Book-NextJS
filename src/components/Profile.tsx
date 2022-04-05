@@ -1,5 +1,5 @@
 import Divider from 'components/Divider';
-import { changeFilterType, toggleDialog, toggleAutoPlay, setLogin } from "components/slices";
+import { changeFilterType, toggleDialog, toggleAutoPlay, setLogin, setMsg } from "components/slices";
 import { setRevisionInterval } from "components/slices/userSlice";
 import VoiceSetting from "components/VoiceSetting";
 import { firebase } from 'lib/firebaseInit';
@@ -8,7 +8,7 @@ import { Button, ButtonGroup, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { useRouter } from "next/router";
-
+import apiHandler from "lib/fetchHandler";
 const intervals = [0, 1, 2, 3, 7, 14, 21, 30, 60]
 
 const Profile: FunctionComponent = () => {
@@ -27,6 +27,15 @@ const Profile: FunctionComponent = () => {
         toggle()
     }
     const toggle = () => dispatch(toggleDialog())
+
+    const exportData = () => apiHandler({ url: "/vocab/export", responseType: 'blob' }, (response: any) => {
+        const url = window.URL.createObjectURL(new Blob([response]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'export.csv'); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+    })
 
     return (
         dialog && <Card className="identity" style={{ width: '18rem' }}>
@@ -57,7 +66,8 @@ const Profile: FunctionComponent = () => {
                             <Button variant={autoPlay.onVerifierClick ? "secondary" : "light"} onClick={() => dispatch(toggleAutoPlay('onVerifierClick'))} size="sm">Verifier click</Button>
                             <VoiceSetting />
                             <Divider content="Learning progress" className="mx-1" />
-                            <Button variant="secondary" onClick={() => route.push('/chart')} size="sm">View</Button>
+                            <Button variant="secondary" onClick={() => route.push('/chart')} size="sm">View</Button>{" "}
+                            <Button variant="secondary" onClick={exportData} size="sm">Export</Button>
 
                         </Card.Text>
                         <hr className="my-12" />

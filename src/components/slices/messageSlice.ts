@@ -1,12 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type message={
+    content:string,
+    type:string
+}
+
 export interface messageState {
+    messageQueue:message[],
     message: String;
     type: String;
     duration: number | null
 }
 
 const initialState: messageState = {
+    messageQueue:[],
     message: "",
     type: "normal",
     duration: null
@@ -16,19 +23,24 @@ export const messageSlice = createSlice({
     name: "dialog",
     initialState,
     reducers: {
-        setMessage: (state: messageState, action: PayloadAction<any>) => {
-            if (typeof action.payload === "string") {
-                state.message = action.payload;
-                state.type = "normal";
-            } else {
-                state.message = action.payload.message;
-                state.type = action.payload.type || "normal";
-            }
-            if (action.payload.duration) state.duration = action.payload.duration * 1000
+        deQueue:(state: messageState)=>{
+            state.messageQueue=state.messageQueue.slice(1)
+        },
+        setMessage: (state: messageState, action: PayloadAction<message>) => {
+            state.messageQueue=[...state.messageQueue,action.payload]
+        },
+        setMessageQueue: (state: messageState, action: PayloadAction<message[]>) => {
+            state.messageQueue=action.payload
         },
     },
 });
 
-export const { setMessage } = messageSlice.actions;
-//export default messageSlice.reducer;
+export const { setMessage,setMessageQueue,deQueue } = messageSlice.actions;
 export const messageReducer = messageSlice.reducer;
+
+export function setMsg(content:string,type="normal",duration=2000){
+    return async(dispatch,getState)=>{
+        dispatch(setMessage({content,type}))
+        setTimeout(()=>dispatch(deQueue()),duration)
+    }
+}

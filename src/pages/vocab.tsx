@@ -2,24 +2,20 @@ import Datalist from "components/datalist";
 import Dialog from "components/Dialog";
 import Loading from "components/Loading";
 import NavBar from "components/NavBar";
-import { setVocabLength,setMessage } from 'components/slices';
+import { setVocabLength, setMsg } from 'components/slices';
 import apiHandler from "lib/fetchHandler";
 import type { NextPage } from "next";
 import { useEffect } from "react";
 import { Stack } from "react-bootstrap";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState, store } from "store";
 import useSWR from 'swr';
 
 
-const LAST_UPDATE_DATE = 1647360056275
-const UPDATE = `Check out the new feature there👉`
-
-function shoudShowUpdate(): Boolean {
+function shoudShowMessage(id: String): Boolean {
     if (typeof window !== "undefined") {
-        const lastseen = parseInt(localStorage.getItem("lastseen") || "0")
-        if(isNaN(lastseen))return true
-        return LAST_UPDATE_DATE > lastseen
+        const messageId = localStorage.getItem("messageId")
+        return id != messageId || messageId == null
     }
     return false
 }
@@ -32,15 +28,18 @@ async function fetcher(url: string) {
 }
 
 function Frame(): NextPage {
+    const dispatch = useDispatch()
     const { vocabs, isLogin } = useSelector((state: RootState) => state.user)
-    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher,{revalidateOnFocus: false})
+    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher, { revalidateOnFocus: false })
 
 
     useEffect(() => {
-        if (shoudShowUpdate()) {
-            store.dispatch(setMessage({ message: UPDATE, duration: 999 }))
-            localStorage.setItem("lastseen", String(Date.now()))
-        }
+        apiHandler({ url: "/vocab/message" }, (response) => {
+            if (shoudShowMessage(response.id)) {
+                dispatch(setMsg(response.value,"update",10000))
+                localStorage.setItem("messageId", response.id)
+            }
+        })
     }, [])
 
 

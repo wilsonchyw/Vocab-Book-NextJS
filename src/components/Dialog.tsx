@@ -1,4 +1,4 @@
-import { changeVocab, handleHide, setExample, setInflection, setMessage, setVocabs } from 'components/slices';
+import { changeVocab, handleHide, setExample, setInflection, setMsg, setVocabs } from 'components/slices';
 import apiHandler from "lib/fetchHandler";
 import type { Inflection } from "lib/vocab";
 import React, { FunctionComponent, useState } from 'react';
@@ -60,7 +60,7 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
 
         if (!vocab.type || !vocab.meaning || !vocab.vocabulary) {
             setLoading(false)
-            return store.dispatch(setMessage({ type: "error", message: "Please fill in all required data" }))
+            return store.dispatch(setMsg({ type: "error", message: "Please fill in all required data" }))
         }
 
         const data = { ...vocab, inflection: JSON.stringify(inflection) }
@@ -68,22 +68,22 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
         const method = isEdit ? "put" : "post"
         const option = { url: "/vocab", method: method, data: data }
         apiHandler(option, () => {
-            dispatch(setMessage(`${isEdit ? "Edit" : "Create"} ${vocab.vocabulary} success`));
+            dispatch(setMsg(`${isEdit ? "Edit" : "Create"} ${vocab.vocabulary} success`));
             dispatch(setVocabs(null))
             mutate()
-            handleClose()            
+            handleClose()
         })
     }
 
     const handleDelete = () => {
         const option = { url: "/vocab", method: "delete", data: { id: vocab.id } }
         confirm(`Confirm delete ${vocab.vocabulary}?`) &&
-        apiHandler(option, () => {
-            dispatch(setMessage(`Delete ${vocab.vocabulary} success`));
-            dispatch(setVocabs(null))
-            mutate()
-            handleClose()            
-        })
+            apiHandler(option, () => {
+                dispatch(setMsg(`Delete ${vocab.vocabulary} success`));
+                dispatch(setVocabs(null))
+                mutate()
+                handleClose()
+            })
     }
 
 
