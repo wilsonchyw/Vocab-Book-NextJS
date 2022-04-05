@@ -21,9 +21,9 @@ const Message: FunctionComponent = () => {
     const handleClose = () => dispatch(deQueue())
 
     return (
-        messageQueue.length!=0 && <div class="container dialog" onClick={handleClose}>
+        messageQueue.length!=0 && <div className="container dialog" onClick={handleClose}>
             {messageQueue.map((message: any) =>
-                <div className="row my-1"  >
+                <div className="row my-1"  key={message.content}>
                     <Alert variant={background(message.type)} className="m-0 d-flex justify-content-between" style={{ whiteSpace: 'pre-wrap' }}>
                         {message.content}
                     </Alert>
