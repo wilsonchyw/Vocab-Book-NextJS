@@ -1,7 +1,7 @@
 import { setEdit } from 'components/slices';
 import useAgent from "lib/useAgent";
 import type { Vocab } from "lib/vocab";
-import { FunctionComponent, useMemo ,useState,useRef,useEffect} from "react";
+import { FunctionComponent, useMemo } from "react";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import ActionBar from "./ActionBar";
@@ -23,20 +23,22 @@ function isWithinRange(date: string | number, offset: number): boolean {
 }
 
 const Datalist: FunctionComponent = ({ datas }: props) => {
+    
     const isMobile = useAgent()
     const dispatch = useDispatch()
 
-    const { order, orderType, perPage, currentPage, keyword, filterType } = useSelector((state: RootState) => state.list)
+    const { order, orderType, perPage, currentPage, keyword, filterType, dateRange } = useSelector((state: RootState) => state.list)
     const visable = useSelector((state: RootState) => state.visable)
-    const {revisionInterval} = useSelector((state:RootState)=>state.user)
+    const { revisionInterval } = useSelector((state: RootState) => state.user)
 
     const filterCallback = {
         keyword: (vocab: Vocab) => vocab.vocabulary.toLowerCase().includes(keyword.toLowerCase()) || vocab.meaning.includes(keyword),
-        forgettingCurve: (vocab: Vocab) => revisionInterval.map((day:number)=>isWithinRange(vocab.createAt, day)).includes(true)//isWithinRange(vocab.createAt, 1) || isWithinRange(vocab.createAt, 2) || isWithinRange(vocab.createAt, 5) || isWithinRange(vocab.createAt, 31)
+        forgettingCurve: (vocab: Vocab) => revisionInterval.map((day: number) => isWithinRange(vocab.createAt, day)).includes(true),//isWithinRange(vocab.createAt, 1) || isWithinRange(vocab.createAt, 2) || isWithinRange(vocab.createAt, 5) || isWithinRange(vocab.createAt, 31)
+        range: (vocab: Vocab) => dateRange[0] < Number(vocab.createAt) && Number(vocab.createAt)< dateRange[1] 
     }
 
     const sortCallback = orderType === "random" ? () => Math.random() - 0.5 : (a: any, b: any) => (a[orderType] > b[orderType] ? 1 : -1) * order
-    
+
     const handleEdit = (vocab: Vocab) => {
         dispatch(setEdit({ vocab: vocab, inflection: vocab.inflection, example: vocab.example }))
     }
@@ -45,7 +47,7 @@ const Datalist: FunctionComponent = ({ datas }: props) => {
         () => datas
             .sort(sortCallback)
             .filter(filterCallback[filterType])
-        , [orderType, order, filterType, datas, keyword,revisionInterval])
+        , [orderType, order, filterType, datas, keyword, revisionInterval,dateRange])
     const header = useMemo(() => <DataHeader isMobile={isMobile} />, [isMobile])
     const actionBar = useMemo(() => <ActionBar dataLength={_datas.length} />, [_datas.length])
     const [start, end] = (perPage && currentPage) ? [(currentPage - 1) * perPage, currentPage * perPage] : [0, _datas.length]
@@ -60,7 +62,7 @@ const Datalist: FunctionComponent = ({ datas }: props) => {
                     <Card key={data.id} className="shadow rounded zoom mouseover" >
                         <DataRow data={data} handleEdit={handleEdit} isMobile={isMobile} visable={visable} />
                     </Card>
-                    ))
+                ))
             }
         </>
     )

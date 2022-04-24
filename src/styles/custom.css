@@ -1,140 +1,139 @@
 body::-webkit-scrollbar {
-    display: none;
-  }
+	display: none;
+}
 
 th {
-    color: #858796 !important;
-    font-family: Roboto, sans-serif;
+	color: #858796 !important;
+	font-family: Roboto, sans-serif;
 }
 
 td,
 td:hover > * {
-    color: #858796 !important;
-    font-family: Roboto, sans-serif;
-    font-weight: 500;
+	color: #858796 !important;
+	font-family: Roboto, sans-serif;
+	font-weight: 500;
 }
 
 tbody {
-    border-top-width: 0px !important;
+	border-top-width: 0px !important;
 }
 
 .bg {
-    /* background-color: #4a4a4a;
+	/* background-color: #4a4a4a;
     border-bottom-left-radius: 50% 40%;
     border-bottom-right-radius: 50% 40%;*/
-    height: 300px;
-    background: #4a4a4a;
-    -webkit-mask: radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top left,
-        radial-gradient(var(--r1, 100%) var(--r2, 50%) at bottom, transparent 79.5%, white 80%) top center,
-        radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top right;
-    mask: radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top left,
-        radial-gradient(var(--r1, 100%) var(--r2, 50%) at bottom, transparent 79.5%, white 80%) top center,
-        radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top right;
-    /* adjust the 150% to control the covered area, the bigger the value the bigger the area will be*/
-    -webkit-mask-size: 33.4% 150%;
-    -webkit-mask-repeat: no-repeat;
-    mask-size: 33.4% 150%;
-    mask-repeat: no-repeat;
+	height: 300px;
+	background: #4a4a4a;
+	-webkit-mask: radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top left,
+		radial-gradient(var(--r1, 100%) var(--r2, 50%) at bottom, transparent 79.5%, white 80%) top center,
+		radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top right;
+	mask: radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top left,
+		radial-gradient(var(--r1, 100%) var(--r2, 50%) at bottom, transparent 79.5%, white 80%) top center,
+		radial-gradient(var(--r1, 100%) var(--r2, 50%) at top, white 79.5%, transparent 80%) top right;
+	/* adjust the 150% to control the covered area, the bigger the value the bigger the area will be*/
+	-webkit-mask-size: 33.4% 150%;
+	-webkit-mask-repeat: no-repeat;
+	mask-size: 33.4% 150%;
+	mask-repeat: no-repeat;
 }
 
 .hero {
-    display: block;
-    box-sizing: border-box;
-    height: 500px !important;
-    background-color: #323232;
-    clip-path: ellipse(129% 100% at 4.97% 0%);
-    z-index: -1;
+	display: block;
+	box-sizing: border-box;
+	height: 500px !important;
+	background-color: #323232;
+	clip-path: ellipse(129% 100% at 4.97% 0%);
+	z-index: -1;
 }
 
 .content {
-    margin-top: -500px;
+	margin-top: -500px;
 }
 
 body {
-    background-color: #68676d !important;
+	background-color: #68676d !important;
 }
 
 .zoom:hover {
-    transform: scale(1.02);
-    transition-duration: 0.1s;
+	transform: scale(1.02);
+	transition-duration: 0.1s;
 }
 
 .dialog {
-    -webkit-animation: fadein 1s;
-    z-index: 2000;
-    position: fixed;
-    left: 30%;
-    width: 40%;
-    top: 1%;
+	-webkit-animation: fadein 1s;
+	z-index: 2000;
+	position: fixed;
+	left: 30%;
+	width: 40%;
+	top: 1%;
 }
 
 .spinner {
-    width: 300px !important;
-    height: 300px !important;
+	width: 300px !important;
+	height: 300px !important;
 }
 
 div {
-    font-family: "Microsoft YaHei";
+	font-family: "Microsoft YaHei";
 }
 
 .gray {
-    background-color: #d3d3d3;
+	background-color: #d3d3d3;
 }
 
 .identity {
-    top: 5%;
-    right: 5%;
-    z-index: 2000;
-    position: fixed;
+	top: 5%;
+	right: 5%;
+	z-index: 2000;
+	position: fixed;
 }
 
-.logo{
-    line-height: 1;
+.logo {
+	line-height: 1;
 }
 
-.mouseover:hover{
-    background-color: #e6e6e6 !important;
+.mouseover:hover {
+	background-color: #e6e6e6 !important;
 }
 
 @media only screen and (max-width: 1100px) {
-    .dialog {
-        -webkit-animation: fadein 1s;
-        z-index: 2000;
-        position: fixed;
-        left: 10%;
-        width: 80%;
-        top: 1%;
-    }
+	.dialog {
+		-webkit-animation: fadein 1s;
+		z-index: 2000;
+		position: fixed;
+		left: 10%;
+		width: 80%;
+		top: 1%;
+	}
 }
 
 @keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 div.hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #eee;
-    text-align: center;
-    height: 0px;
-    line-height: 0px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 0;
+	border-top: 1px solid #eee;
+	text-align: center;
+	height: 0px;
+	line-height: 0px;
 }
 
-
 .fade-in-section {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1500ms ease-out,visibility 1500ms ease-out;
-    will-change: opacity,  visibility;
-  }
-  .fade-in-section.is-visible {
-    opacity: 1;
-    transform: none;
-    visibility: visible;
-  }
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1500ms ease-out, visibility 1500ms ease-out;
+	will-change: opacity, visibility;
+}
+.fade-in-section.is-visible {
+	opacity: 1;
+	transform: none;
+	visibility: visible;
+}

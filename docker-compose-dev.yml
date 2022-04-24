@@ -14,7 +14,8 @@ services:
         environment:
             LD_LIBRARY_PATH: "/opt/oracle/instantclient_19_10"
             WALLET: "/app/oracle/wallet"            
-            #API_ENDPOINT: "http://150.230.38.246:3000"
+            API_ENDPOINT: "https://api.vocabsitory.site/api"
+            #"http://150.230.38.246:3000"
             #"https://api.vocabsitory.site/api"
         image: nextjs_dev
         container_name: nextjs_dev

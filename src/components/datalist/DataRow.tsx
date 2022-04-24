@@ -14,16 +14,18 @@ import { RootState } from 'store';
 type rowProp = {
     data: Vocab
     handleEdit: Function,
-    isMobile: Boolean,
-    visable: {
-        vocab: Boolean,
-        meaning: Boolean
-    }
+    isMobile: boolean,
+    visable: visable 
+    
 }
 
 type visable = {
     vocab: Boolean,
-    meaning: Boolean
+    meaning: Boolean,
+    detail:{
+        all:boolean,
+        onCorrect:boolean
+    }
 }
 
 type verifierProps = {
@@ -37,12 +39,14 @@ type verifierProps = {
 }
 
 const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: rowProp) => {
+
     const [_visable, setVisable] = useState<visable>({})
     const [expand, setExpand] = useState<Boolean>(false)
     const autoPlay = useSelector((state: RootState) => state.user.autoPlay)
 
     useEffect(() => {
         setVisable(visable)
+        setExpand(visable.detail.all)
     }, [visable])
 
     const content = typeof data.inflection === "string" ? JSON.parse(data.inflection) : data.inflection
@@ -83,7 +87,7 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: row
                     </span>
                 </Col>
                 <Col className="px-0" xs={2}>
-                    <Verifier vocab={data} setVisable={setVisable} autoPlay={autoPlay} />
+                    <Verifier vocab={data} setVisable={setVisable} autoPlay={autoPlay} setExpand={setExpand} shouldExpand={visable.detail.onCorrect}/>
                 </Col>
                 <Col onClick={() => setVisable({ ..._visable, vocab: !_visable.vocab })} className="px-0" xs={2}>
                     {_visable.vocab && data.vocabulary}

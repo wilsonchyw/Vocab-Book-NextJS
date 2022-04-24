@@ -10,6 +10,9 @@ const voiceList = [
     {
         "name": "English (United Kingdom)",
         "lang": "en-GB"
+    },{
+        "name": "English (Canada)",
+        "lang": "en-CA"
     },
     {
         "name": "English (United States)",

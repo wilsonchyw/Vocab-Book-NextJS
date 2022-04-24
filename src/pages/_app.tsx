@@ -21,8 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter()
     const [hideContent, setHideContent] = useState<Boolean>(true);
 
-    function toVocab(){
-        if(publicRoute.includes(router.pathname)) router.push("/vocab")
+    function toVocab() {
+        if (publicRoute.includes(router.pathname)) router.push("/vocab")
         store.dispatch(setLogin(true))
         setHideContent(false)
     }

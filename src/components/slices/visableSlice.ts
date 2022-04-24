@@ -1,12 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface visableState {
-    [key: string]: Boolean;
+    [key: string]: Boolean|any
 }
 
 const initialState: visableState = {
     vocab: true,
     meaning: true,
+    detail: {
+        all:false,
+        onCorrect:false
+    },
 };
 
 export const visableSlice = createSlice({
@@ -17,9 +21,13 @@ export const visableSlice = createSlice({
             const key = action.payload;
             state[key] = !state[key];
         },
+        toggleDetail:(state:visableState,action:PayloadAction<object>)=>{
+            const key = action.payload
+            state.detail[key]=!state.detail[key]
+        }
     },
 });
 
-export const { toggleVisable } = visableSlice.actions;
+export const { toggleVisable,toggleDetail } = visableSlice.actions;
 //export default visableSlice.reducer;
 export const visableReducer = visableSlice.reducer;
