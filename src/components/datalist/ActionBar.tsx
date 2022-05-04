@@ -28,15 +28,16 @@ function ActionBar({ dataLength }: { dataLength: number }): NextFunctionComponen
     };
 
     const listenKeyPress = (event:any)=>{
+        console.log(event)
         if(event.keyCode==37) return previousPage()// <--
-        if(event.keyCode==339) return nextPage() // -->
+        if(event.keyCode==39) return nextPage() // -->
 
     }
 
     useEffect(() => {
         window.addEventListener("keydown", listenKeyPress);
         return ()=>window.removeEventListener("keydown", listenKeyPress);
-    }, []);
+    });
 
     return (
         <Card className="bg-transparent">
