@@ -20,7 +20,6 @@ const Message: FunctionComponent = () => {
     const { messageQueue } = useSelector((state: RootState) => state.message);
     const handleClose = () => dispatch(deQueue());
 
-    console.log("messageQueue",messageQueue)
     return (
         messageQueue.length != 0 && (
             <div className="container dialog">

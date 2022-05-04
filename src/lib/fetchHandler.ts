@@ -12,7 +12,6 @@ const { publicRuntimeConfig } = getConfig();
 async function fetchHandler(option: VerifiedObj, callback: Function | null = null, silent: Boolean = false) {
     try {
         if (!option.method) option.method = "get";
-        console.log("store.getState().user.localLogin", store.getState().user.isLocalLogin);
         if (store.getState().user.isLocalLogin) {
             const response = localDataHandler(option);
             return callback ? callback(response) : response;

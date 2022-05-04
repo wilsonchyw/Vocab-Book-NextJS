@@ -8,20 +8,23 @@ import "react-datepicker/dist/react-datepicker.css";
 const DateRangePicker: FunctionComponent = () => {
     const dispatch = useDispatch()
     const [start, end] = useSelector((state: RootState) => state.list.dateRange)
-    const [startDate, setStartDate] = useState(new Date(end));
-    const [endDate, setEndDate] = useState(new Date(start));
+    const [dateStart, setStartDate] = useState(new Date(end));
+    const [dateEnd, setEndDate] = useState(new Date(start));
     const setDate = (dates: Date[]) => {
         const [_start, _end] = dates
-        setStartDate(start);
-        setEndDate(end);
+        console.log(dates)
+        setStartDate(_start);
+        setEndDate(_end);
+        
+        //console.log(startDate,endDate)
         if (_start != null && _end != null) dispatch(changeRange([_start.getTime(), _end.getTime()]))
     }
     return (
         <DatePicker
-            selected={startDate}
-            onChange={(dates: any[]) => setDate(dates)}
-            startDate={startDate}
-            endDate={endDate}
+            selected={dateStart}
+            onChange={setDate}
+            startDate={dateStart}
+            endDate={dateEnd}
             selectsRange
             inline
         />
