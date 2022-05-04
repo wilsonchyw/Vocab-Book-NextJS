@@ -86,8 +86,6 @@ const Dialog: FunctionComponent<prop> = ({ mutate }: prop) => {
             })
     }
 
-
-
     return (
         <Modal show={show} onHide={handleClose} centered scrollable={true} backdrop="static">
             <Modal.Header closeButton>

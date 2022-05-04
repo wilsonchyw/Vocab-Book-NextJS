@@ -9,5 +9,6 @@ export type Vocab = {
     type: string;
     createAt: number;
     inflection?: Inflection;
-    example: string[]
+    example: string[];
+    revision:number
 };

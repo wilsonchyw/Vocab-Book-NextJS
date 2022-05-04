@@ -35,7 +35,8 @@ function Frame(): NextPage {
 
     useEffect(() => {
         apiHandler({ url: "/vocab/message" }, (response) => {
-            if (shoudShowMessage(response.id)) {
+            console.log('response',response)
+            if (shoudShowMessage(response.id) && response.value) {
                 dispatch(setMsg(response.value,"update",10000))
                 localStorage.setItem("messageId", response.id)
             }

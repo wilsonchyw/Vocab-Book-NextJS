@@ -24,4 +24,4 @@ services:
 networks:
     next-prod-networks:
         external:
-            name: vocab-book-nextjs_default
+            name: vocab-book-nest_default

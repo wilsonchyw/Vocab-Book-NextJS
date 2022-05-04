@@ -20,6 +20,7 @@ const publicRoute = ["/", "/login"]
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter()
     const [hideContent, setHideContent] = useState<Boolean>(true);
+    const localLogin = store.getState().user.isLocalLogin
 
     function toVocab() {
         if (publicRoute.includes(router.pathname)) router.push("/vocab")
@@ -28,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
 
     function authCheck() {
-        if (getLocalToken()) toVocab()
+        if (getLocalToken() || localLogin)return toVocab()
 
         if (publicRoute.includes(router.pathname)) setHideContent(false)
 
@@ -40,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 toVocab()
             } else {
                 store.dispatch(setUser(null))
-                router.push("/login")
+                if (!publicRoute.includes(router.pathname))router.push("/login")
             }
         });
     }

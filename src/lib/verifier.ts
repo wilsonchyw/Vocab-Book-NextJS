@@ -1,4 +1,6 @@
-export type VerifiedObj = { [key: string]: string | number | Object };
+export type VerifiedObj = { 
+    [key: string]: string | number | any
+};
 
 const verifier = {
     exact: exact,
