@@ -32,12 +32,12 @@ function ActionBar({ dataLength }: { dataLength: number }): NextFunctionComponen
         if(event.keyCode==39) return nextPage() // -->
 
     }
-
+/**
     useEffect(() => {
         window.addEventListener("keydown", listenKeyPress);
         return ()=>window.removeEventListener("keydown", listenKeyPress);
     });
-
+ */
     return (
         <Card className="bg-transparent">
             <Row>
