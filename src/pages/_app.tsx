@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
 
     function authCheck() {
+        if (publicRoute.includes(router.pathname)) return setHideContent(false)
         if (localLogin) return toVocab();
         if (tokenManager.local()) toVocab();
         tokenManager.firebase(

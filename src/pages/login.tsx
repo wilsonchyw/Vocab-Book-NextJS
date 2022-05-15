@@ -41,8 +41,11 @@ function Login(): NextPage {
 
             <Stack gap={2} className="col-md-5 mx-auto">
                 <Alert variant="danger">
-                    Please be aware that if you continue without login, data store locally only. Switching device may
-                    lose your learning progress.
+                    <pre>
+                    Please be aware that if you continue without login, data store locally only.
+                    Switching device may lose your learning progress.
+                    Also, some function may not be supported
+                    </pre>
                 </Alert>
                 <button type="button" className="btn btn-primary w-50 mx-auto" onClick={localLogin}>
                     Continue without login
