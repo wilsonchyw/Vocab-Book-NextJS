@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { dialogReducer, messageReducer, visableReducer, userReducer, listReducer, voiceReducer } from "components/slices";
+import { dialogReducer, messageReducer, visibleReducer, userReducer, listReducer, voiceReducer } from "components/slices";
 
 export const store = configureStore({
     reducer: {
@@ -7,7 +7,7 @@ export const store = configureStore({
         dialog: dialogReducer,
         message: messageReducer,
         user: userReducer,
-        visable: visableReducer,
+        visible: visibleReducer,
         voice: voiceReducer,
     },
 });

@@ -2,47 +2,104 @@ import Datalist from "components/datalist";
 import Dialog from "components/Dialog";
 import Loading from "components/Loading";
 import NavBar from "components/NavBar";
-import { setVocabLength, setMsg } from 'components/slices';
+import { setVocabLength, setMsg, setRevisionDays, changeCurrent } from "components/slices";
 import apiHandler from "lib/fetchHandler";
 import type { NextPage } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Stack } from "react-bootstrap";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { RootState, store } from "store";
-import useSWR from 'swr';
+import useSWR from "swr";
 
+const GESTURE_THRESHOLD = 50;
 
 function shoudShowMessage(id: String): Boolean {
     if (typeof window !== "undefined") {
-        const messageId = localStorage.getItem("messageId")
-        return id != messageId || messageId == null
+        const messageId = localStorage.getItem("messageId");
+        return id != messageId || messageId == null;
     }
-    return false
+    return false;
 }
 
 async function fetcher(url: string) {
-    const option = { url: url }
-    const result = await apiHandler(option)
-    store.dispatch(setVocabLength(result.length))
+    const option = { url: url };
+    const result = await apiHandler(option);
+    store.dispatch(setVocabLength(result.length));
     return result;
 }
 
 function Frame(): NextPage {
-    const dispatch = useDispatch()
-    const { vocabs, isLogin } = useSelector((state: RootState) => state.user)
-    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher, { revalidateOnFocus: false })
+    const dispatch = useDispatch();
+
+    /**  
+     * Experiment feature!!
+     * 
+    const [gestureStarted, setGestureState] = useState<boolean>(false);
+    const [startPosition, setStart] = useState<number>(0);
+    const [endPosition, setEnd] = useState<number>(0);
+    const { perPage, currentPage } = useSelector((state: RootState) => state.list);
+    */
+   
+    const { vocabs, isLogin } = useSelector((state: RootState) => state.user);    
+    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher, { revalidateOnFocus: false });
+
+    /**  
+     * Experiment feature!!
+     * 
+    const lastPage = data ? Math.ceil(data.length / perPage) : 1;
+
+    function previousPage() {
+        console.log("previousPage","currentPage",currentPage)
+        if (currentPage > 1) dispatch(changeCurrent(currentPage - 1));
+    }
+
+    function nextPage() {
+        console.log("nextPage","currentPage",currentPage)
+        if (currentPage <= lastPage) {
+            dispatch(changeCurrent(currentPage + 1));
+        }
+    }
+
+    function gestureSwitchPage(event: any) {
+        let position = event.changedTouches[0].screenX;
 
 
-    useEffect(() => {
-        apiHandler({ url: "/vocab/message" }, (response) => {
-            console.log('response',response)
-            if (shoudShowMessage(response.id) && response.value) {
-                dispatch(setMsg(response.value,"update",10000))
-                localStorage.setItem("messageId", response.id)
+        console.log("Gesture position", position,"startPosition",startPosition,"endPosition",endPosition, "gestureStarted", gestureStarted);
+
+        if (gestureStarted) {
+            setEnd(position);
+            if (Math.abs(startPosition - endPosition) > GESTURE_THRESHOLD) {
+                endPosition > startPosition ? previousPage() : nextPage();
             }
-        })
-    }, [])
+            setGestureState(false);
+        } else {
+            setStart(position);
+            setGestureState(true);
+        }
+    }
+     */
+    useEffect(() => {
+        apiHandler({ url: "/message" }, (response) => {
+            if (shoudShowMessage(response.id) && response.value) {
+                dispatch(setMsg(response.value, "update", 30000));
+                localStorage.setItem("messageId", response.id);
+            }
+        });
+        apiHandler({ url: "/user" }, (response: string[]) => {
+            dispatch(setRevisionDays(response));
+        });
+        /** 
+         * Experiment feature!!
+         * 
+        window.addEventListener("touchstart", gestureSwitchPage);
+        window.addEventListener("touchend", gestureSwitchPage);
 
+        return () => {
+            window.removeEventListener("touchstart", gestureSwitchPage);
+            window.removeEventListener("touchend", gestureSwitchPage);
+        };
+        */
+    }, []);//[startPosition,endPosition,gestureStarted]
 
     return (
         <>
@@ -50,12 +107,10 @@ function Frame(): NextPage {
             <div className="hero"></div>
             <Dialog mutate={mutate} />
             <Stack gap={2} className="col-md-10 mx-auto content vstack gap-2 p-3">
-                {!data ? <Loading /> : <Datalist datas={data} />
-                }
+                {!data ? <Loading /> : <Datalist datas={data} />}
             </Stack>
         </>
-    )
+    );
 }
 
-export default Frame
-
+export default Frame;

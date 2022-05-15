@@ -16,7 +16,6 @@ const DateRangePicker: FunctionComponent = () => {
         setStartDate(_start);
         setEndDate(_end);
         
-        //console.log(startDate,endDate)
         if (_start != null && _end != null) dispatch(changeRange([_start.getTime(), _end.getTime()]))
     }
     return (

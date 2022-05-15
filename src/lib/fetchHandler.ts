@@ -1,10 +1,10 @@
 import axios from "axios";
 import { firebase } from "lib/firebaseInit";
+import tokenManager from "lib/tokenManager";
 import getConfig from "next/config";
 import { store } from "store";
 import errorHandler from "./errorHandler";
 import localDataHandler from "./localDataHandler";
-import getLocalToken from "./localToken";
 import verifier, { VerifiedObj } from "./verifier";
 
 const { publicRuntimeConfig } = getConfig();
@@ -12,6 +12,7 @@ const { publicRuntimeConfig } = getConfig();
 async function fetchHandler(option: VerifiedObj, callback: Function | null = null, silent: Boolean = false) {
     try {
         if (!option.method) option.method = "get";
+
         if (store.getState().user.isLocalLogin) {
             const response = localDataHandler(option);
             return callback ? callback(response) : response;
@@ -19,7 +20,7 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
 
         verifier.atLeast(["url"], option);
 
-        const localToken = getLocalToken();
+        const localToken = tokenManager.localWithVerify()
         const token: string = localToken || (await firebase.auth().currentUser.getIdToken());
         if (!localToken) localStorage.setItem("token", token);
         if (token) option.headers = { Authorization: "Bearer " + token };

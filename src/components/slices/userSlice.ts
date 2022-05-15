@@ -16,6 +16,8 @@ export interface userState {
         onVerifierClick: Boolean;
         [key: string]: Boolean;
     };
+    revisionDays: number[];
+    learningDay: number;
 }
 
 const initialState: userState = {
@@ -28,10 +30,10 @@ const initialState: userState = {
     revisionInterval: getFromLocal(REVISION_INTERVAL, [1, 2, 7, 21, 30]),
     autoPlay: (() => {
         const data = getFromLocal(AUTO_PLAY, {});
-        return data.hasOwnProperty("onCorrect")
-            ? data
-            : { onCorrect: false, onVerifierClick: false };
+        return data.hasOwnProperty("onCorrect") ? data : { onCorrect: false, onVerifierClick: false };
     })(),
+    revisionDays: [],
+    learningDay: new Date().getTime(),
 };
 
 function saveLocal(key: string, value: any) {
@@ -77,25 +79,19 @@ export const userSlice = createSlice({
         },
         setRevisionInterval: (state: userState, action: PayloadAction<Number>) => {
             const index = state.revisionInterval.indexOf(action.payload);
-            const result =
-                index === -1
-                    ? state.revisionInterval.concat([action.payload])
-                    : state.revisionInterval.filter((x) => x != action.payload);
+            const result = index === -1 ? state.revisionInterval.concat([action.payload]) : state.revisionInterval.filter((x) => x != action.payload);
             state.revisionInterval = result;
             saveLocal(REVISION_INTERVAL, result);
+        },
+        setRevisionDays: (state: userState, action: PayloadAction<string[]>) => {
+            state.revisionDays = action.payload.map((day: string) => parseInt(day));
+        },
+        setLearningDate: (state: userState, action: PayloadAction<number>) => {
+            state.learningDay = action.payload;
         },
     },
 });
 
-export const {
-    setUser,
-    toggleDialog,
-    setRevisionInterval,
-    toggleAutoPlay,
-    setLogin,
-    setVocabs,
-    setVocabLength,
-    setLocalLogin,
-} = userSlice.actions;
+export const { setUser, toggleDialog, setRevisionInterval, toggleAutoPlay, setLogin, setVocabs, setVocabLength, setLocalLogin, setRevisionDays, setLearningDate } = userSlice.actions;
 //export default userSlice.reducer;
 export const userReducer = userSlice.reducer;

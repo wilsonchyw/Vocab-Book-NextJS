@@ -137,3 +137,22 @@ div.hr {
 	transform: none;
 	visibility: visible;
 }
+
+.identity {	
+	width: "18rem";
+	max-height: 80vh !important;
+}
+
+.settting{
+	overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 3px;  
+    background: transparent;  
+}
+
+::-webkit-scrollbar-thumb {
+    background: #525252;
+}

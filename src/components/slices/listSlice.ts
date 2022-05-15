@@ -16,7 +16,7 @@ const initialState: listState = {
 	perPage: 15,
 	currentPage: 1,
 	keyword: "",
-	filterType: "keyword",
+	filterType: "forgettingCurve",//"keyword",
 	dateRange: [new Date().getTime(), new Date().getTime() - 1000 * 60 * 60 * 24 * 7],
 };
 

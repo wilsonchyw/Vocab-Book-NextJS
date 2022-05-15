@@ -15,39 +15,37 @@ type rowProp = {
     data: Vocab
     handleEdit: Function,
     isMobile: boolean,
-    visable: visable 
-    
+    visible: visible 
+    onInputCorrect:Function    
 }
 
-type visable = {
+type visible = {
     vocab: Boolean,
     meaning: Boolean,
     detail:{
-        all:boolean,
+        always:boolean,
         onCorrect:boolean
     }
 }
 
-type verifierProps = {
-    word: string,
-    setVisable: Function,
-    autoPlay: {
-        onCorrect: Boolean,
-        onVerifierClick: Boolean,
-        [key: string]: Boolean
-    }
-}
 
-const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: rowProp) => {
+const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visible,onInputCorrect }: rowProp) => {
 
-    const [_visable, setVisable] = useState<visable>({})
+    const [_visible, setVisible] = useState<visible>({})
     const [expand, setExpand] = useState<Boolean>(false)
     const autoPlay = useSelector((state: RootState) => state.user.autoPlay)
 
     useEffect(() => {
-        setVisable(visable)
-        setExpand(visable.detail.all)
-    }, [visable])
+        /**
+         * Determine should the vocab or meaning be visible or not.
+         * This state is for a single datarow only, will not affect the other row
+         */
+        setVisible(visible)
+        /**
+         * Determine should the details(inflection,example) be expand or not. Default is false
+         */
+        setExpand(visible.detail.always)
+    }, [visible])
 
     const content = typeof data.inflection === "string" ? JSON.parse(data.inflection) : data.inflection
     const inflection = {
@@ -60,13 +58,16 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: row
     if (isMobile) return (
         <div>
             <Row className="p-2 ">
-                <Col onClick={() => setVisable({ ..._visable, vocab: !_visable.vocab })} xs={5} className="pr-0">
-                    {_visable.vocab && <div>
+                {/**
+                 * Clicking on the column will make the content visible or 
+                 */}
+                <Col onClick={() => setVisible({ ..._visible, vocab: !_visible.vocab })} xs={5} className="pr-0">
+                    {_visible.vocab && <div>
                         {data.vocabulary}
                     </div>}
                 </Col>
-                <Col onClick={() => setVisable({ ..._visable, meaning: !_visable.meaning })} xs={6} className="p-0">
-                    {_visable.meaning && data.meaning}
+                <Col onClick={() => setVisible({ ..._visible, meaning: !_visible.meaning })} xs={6} className="p-0">
+                    {_visible.meaning && data.meaning}
                 </Col>
                 <Col xs={1} className="p-0">
                     {expand ? <KeyboardArrowUpIcon onClick={() => setExpand(false)} /> : <KeyboardArrowDownIcon onClick={() => setExpand(true)} />}
@@ -87,13 +88,13 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visable }: row
                     </span>
                 </Col>
                 <Col className="px-0" xs={2}>
-                    <Verifier vocab={data} setVisable={setVisable} autoPlay={autoPlay} setExpand={setExpand} shouldExpand={visable.detail.onCorrect}/>
+                    <Verifier vocab={data} setVisible={setVisible} autoPlay={autoPlay} setExpand={setExpand} shouldExpand={visible.detail.onCorrect} onInputCorrect={onInputCorrect}/>
                 </Col>
-                <Col onClick={() => setVisable({ ..._visable, vocab: !_visable.vocab })} className="px-0" xs={2}>
-                    {_visable.vocab && data.vocabulary}
+                <Col onClick={() => setVisible({ ..._visible, vocab: !_visible.vocab })} className="px-0" xs={2}>
+                    {_visible.vocab && data.vocabulary}
                 </Col>
-                <Col onClick={() => setVisable({ ..._visable, meaning: !_visable.meaning })} className="px-0" >
-                    {_visable.meaning && data.meaning}
+                <Col onClick={() => setVisible({ ..._visible, meaning: !_visible.meaning })} className="px-0" >
+                    {_visible.meaning && data.meaning}
                 </Col>
                 <Col className="px-0" sm={1}>
                     {data.type === "adjective" ? "adj" : data.type}

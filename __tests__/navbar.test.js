@@ -2,14 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import "@testing-library/jest-dom";
 import { fireEvent, render as rtlRender, screen } from "@testing-library/react";
 import Navbar from "components/Navbar";
-import { dialogReducer, listReducer, userReducer, visableReducer } from "components/slices";
+import { dialogReducer, listReducer, userReducer, visibleReducer } from "components/slices";
 import { Provider } from "react-redux";
 
 jest.mock("components/Profile", () => () => <div></div>);
 
 const store = configureStore({
     reducer: {
-        visable: visableReducer,
+        visible: visibleReducer,
         list: listReducer,
         dialog: dialogReducer,
         user:userReducer
@@ -23,12 +23,12 @@ function render(ui) {
 describe("Navbar Component", () => {
     
 
-    test("Toggle visable status", () => {
+    test("Toggle visible status", () => {
         render(<Navbar />);
         fireEvent.click(screen.getByText("Vocab"));
-        expect(store.getState().visable.vocab).toEqual(false);
+        expect(store.getState().visible.vocab).toEqual(false);
         fireEvent.click(screen.getByText("Meaning"));
-        expect(store.getState().visable.vocab).toEqual(false);
+        expect(store.getState().visible.vocab).toEqual(false);
     });
 
     test("Change perPage value", () => {

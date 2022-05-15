@@ -29,13 +29,9 @@ const Message: FunctionComponent = () => {
                             variant={background(message.type)}
                             className="m-0 d-flex flex-row"
                             style={{ whiteSpace: "pre-wrap" }}
+                            onClick={background(message.type) == "primary" ? handleClose : null}
                         >
-                            <button
-                                type="button"
-                                className="btn-close"
-                                aria-label="Close"
-                                onClick={handleClose}
-                            ></button>
+                            {background(message.type) != "primary" && <button type="button" className="btn-close" aria-label="Close" onClick={handleClose}></button>}
                             {message.content}
                         </Alert>
                     </div>

@@ -4,7 +4,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { toggleCreate } from 'components/slices/dialogSlice';
 import { changeOrderType, changePerPage } from 'components/slices/listSlice';
 import { toggleDialog } from "components/slices/userSlice";
-import { toggleVisable } from "components/slices/visableSlice";
+import { toggleVisible } from "components/slices/visibleSlice";
 import useAgent from "lib/useAgent";
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ const NavBar: FunctionComponent = () => {
         if (route.pathname!="/vocab") route.push("vocab")
         dispatch(toggleCreate())
     }
-    const [vocabVisable, meaningVisable] = useSelector((state: RootState) => [state.visable.vocab, state.visable.meaning])
+    const [vocabVisible, meaningVisible] = useSelector((state: RootState) => [state.visible.vocab, state.visible.meaning])
 
     if (isMobile) return (
         <Navbar bg="dark" variant="dark" sticky="top">
@@ -41,8 +41,8 @@ const NavBar: FunctionComponent = () => {
 
                         <Dropdown.Menu variant="dark" style={{minWidth:"90px"}}>
                             <Dropdown.Item >                                
-                                <div className={vocabVisable ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisable('vocab'))}>Vocab</div>
-                                <div className={meaningVisable ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisable('meaning'))}>Meaning</div>
+                                <div className={vocabVisible ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisible('vocab'))}>Vocab</div>
+                                <div className={meaningVisible ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisible('meaning'))}>Meaning</div>
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
@@ -62,8 +62,8 @@ const NavBar: FunctionComponent = () => {
                 <Nav className="me-auto">
                     <Nav.Link href="" onClick={newVocab}>New</Nav.Link>
                     <Nav.Link href="" onClick={() => dispatch(changeOrderType("random"))}>Shuffle</Nav.Link>
-                    <Nav.Link href="" className={vocabVisable ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisable('vocab'))}>Vocab</Nav.Link>
-                    <Nav.Link href="" className={meaningVisable ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisable('meaning'))}>Meaning</Nav.Link>
+                    <Nav.Link href="" className={vocabVisible ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisible('vocab'))}>Vocab</Nav.Link>
+                    <Nav.Link href="" className={meaningVisible ? "text-white" : "text-secondary"} onClick={() => dispatch(toggleVisible('meaning'))}>Meaning</Nav.Link>
                     {!isMobile && <PerPageDropdown handleNumChange={setPerPage} />}
                 </Nav>
                 <Nav>
