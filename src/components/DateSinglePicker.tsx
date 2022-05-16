@@ -16,12 +16,13 @@ const DateSinglePicker: FunctionComponent = () => {
         dispatch(setLearningDate(day.getTime()));
     };
 
+    console.log("revisionDays",revisionDays)
     const dates = [
         {
             "will-learn": revisionInterval.map((interval: number): number => startDate - oneDay * interval),
         },
         {
-            learnt: revisionDays,
+            "learnt": revisionDays,
         },
     ];
 

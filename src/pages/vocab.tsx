@@ -80,7 +80,7 @@ function Frame(): NextPage {
      */
     useEffect(() => {
         //console.log("useEffect isLocalLogin",isLocalLogin)
-        if(isLocalLogin!=false){
+        if(isLocalLogin==false){
             apiHandler({ url: "/message" }, (response) => {
                 if (shoudShowMessage(response.id) && response.value) {
                     dispatch(setMsg(response.value, "update", 30000));

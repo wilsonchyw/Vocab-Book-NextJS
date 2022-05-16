@@ -47,6 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 if (!publicRoute.includes(router.pathname)) router.push("/login");
             }
         );
+        //console.log("authCheck finish")
     }
     /** 
     function authCheck() {
@@ -69,11 +70,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
     */
     useEffect(() => {
-        //router.events.on('routeChangeStart', handleStart)
-        /**
-         * Not using 'routeChangeStart' so that useSWR in Vocab page could jumping a gun before the component os mounted.
-         * fetchHandler and server would handle the authen check.
-         */
+        router.events.on('routeChangeStart', ()=>setHideContent(true))
         authCheck();
     }, [router.pathname]);
 
