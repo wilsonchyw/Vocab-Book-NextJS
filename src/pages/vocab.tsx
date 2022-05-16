@@ -2,12 +2,12 @@ import Datalist from "components/datalist";
 import Dialog from "components/Dialog";
 import Loading from "components/Loading";
 import NavBar from "components/NavBar";
-import { setVocabLength, setMsg, setRevisionDays, changeCurrent } from "components/slices";
+import { setMsg, setRevisionDays, setVocabLength } from "components/slices";
 import apiHandler from "lib/fetchHandler";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Stack } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState, store } from "store";
 import useSWR from "swr";
 
@@ -40,7 +40,7 @@ function Frame(): NextPage {
     const { perPage, currentPage } = useSelector((state: RootState) => state.list);
     */
    
-    const { vocabs, isLogin } = useSelector((state: RootState) => state.user);    
+    const { vocabs, isLogin,isLocalLogin } = useSelector((state: RootState) => state.user);    
     const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher, { revalidateOnFocus: false });
 
     /**  
@@ -79,15 +79,19 @@ function Frame(): NextPage {
     }
      */
     useEffect(() => {
-        apiHandler({ url: "/message" }, (response) => {
-            if (shoudShowMessage(response.id) && response.value) {
-                dispatch(setMsg(response.value, "update", 30000));
-                localStorage.setItem("messageId", response.id);
-            }
-        });
-        apiHandler({ url: "/user" }, (response: string[]) => {
-            dispatch(setRevisionDays(response));
-        });
+        //console.log("useEffect isLocalLogin",isLocalLogin)
+        if(isLocalLogin!=false){
+            apiHandler({ url: "/message" }, (response) => {
+                if (shoudShowMessage(response.id) && response.value) {
+                    dispatch(setMsg(response.value, "update", 30000));
+                    localStorage.setItem("messageId", response.id);
+                }
+            });
+            apiHandler({ url: "/user" }, (response: string[]) => {
+                dispatch(setRevisionDays(response));
+            });
+        }
+        
         /** 
          * Experiment feature!!
          * 

@@ -10,7 +10,8 @@ import {
 import { setVocabs } from 'components/slices';
 import barChartData from "data/barChart.json";
 import apiHandler from "lib/fetchHandler";
-import getLocalToken from 'lib/localToken';
+import tokenManager from "lib/tokenManager";
+//import getLocalToken from 'lib/localToken';
 import type { Vocab } from 'lib/vocab';
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -59,7 +60,7 @@ function Index(): NextPage {
     }
 
     useEffect(() => {
-        if (getLocalToken()) fetchData()
+        if (tokenManager.localWithVerify()) fetchData()
     }, [])
 
     return (

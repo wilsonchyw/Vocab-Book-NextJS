@@ -24,16 +24,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     const localLogin = store.getState().user.isLocalLogin;
 
     function toVocab(caller = "not provide") {
-        console.log("toVocab call by", caller);
+        //console.log("toVocab call by", caller);
         if (publicRoute.includes(router.pathname)) router.push("/vocab");
         store.dispatch(setLogin(true));
         setHideContent(false);
     }
 
     function authCheck() {
+        //console.log("localLogin",localLogin,"url",router.pathname)
         if (publicRoute.includes(router.pathname)) return setHideContent(false)
         if (localLogin) return toVocab();
-        if (tokenManager.local()) toVocab();
+        if (tokenManager.localWithVerify()) toVocab();
         tokenManager.firebase(
             // Resolve callback
             (user: firebase.user) => {

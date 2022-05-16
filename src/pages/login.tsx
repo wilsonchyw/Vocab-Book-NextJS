@@ -40,12 +40,8 @@ function Login(): NextPage {
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
 
             <Stack gap={2} className="col-md-5 mx-auto">
-                <Alert variant="danger">
-                    <pre>
-                    Please be aware that if you continue without login, data store locally only.
-                    Switching device may lose your learning progress.
-                    Also, some function may not be supported
-                    </pre>
+                <Alert variant="danger" style={{ whiteSpace: "pre-wrap" }}>
+                    {`Please be aware that if you continue without login, data store locally only. Switching device may lose your learning progress.\n\nAlso, some function may not be supported`}
                 </Alert>
                 <button type="button" className="btn btn-primary w-50 mx-auto" onClick={localLogin}>
                     Continue without login

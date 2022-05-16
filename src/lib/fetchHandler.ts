@@ -20,7 +20,7 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
 
         verifier.atLeast(["url"], option);
 
-        const localToken = tokenManager.localWithVerify()
+        const localToken = tokenManager.localWithVerify();
         const token: string = localToken || (await firebase.auth().currentUser.getIdToken());
         if (!localToken) localStorage.setItem("token", token);
         if (token) option.headers = { Authorization: "Bearer " + token };
@@ -32,7 +32,7 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
             return callback ? callback(response.data) : response.data;
         }
     } catch (err: any) {
-        console.log(err);
+        console.log(option.url,err);
         if (silent) return;
         if (err.message.match(/null|reading|getIdToken/g)) err = "Something wrong, please wait..";
         errorHandler(err);
