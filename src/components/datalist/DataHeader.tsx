@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '/store';
 
 type prop = {
-    isMobile: Boolean
+    isMobile: Boolean,
+    dataLength:number,
+    correntLength:number
 }
 
 const Arrow: FunctionComponent = ({ column }: { column: String }) => {
-    const {order, orderType} = useSelector((state: RootState) => state.list)
+    const {order, orderType,filterType} = useSelector((state: RootState) => state.list)
     if (orderType !== column) return ""
     if (order === 1) {
         return <ArrowUpwardIcon fontSize={'small'} />
@@ -20,7 +22,7 @@ const Arrow: FunctionComponent = ({ column }: { column: String }) => {
     }
 }
 
-const DataHeader: FunctionComponent = ({ isMobile }: prop) => {
+const DataHeader: FunctionComponent = ({ isMobile ,dataLength,correntLength}: prop) => {
     const dispatch = useDispatch()
     if (isMobile) return (
         <Card className="p-2 shadow rounded">
@@ -42,6 +44,7 @@ const DataHeader: FunctionComponent = ({ isMobile }: prop) => {
                 </Col>
                 <Col className="px-0" xs={2}>
                     <strong>Verify</strong>
+                    <span>({correntLength}/{dataLength})</span>
                 </Col>                
                 <Col onClick={() => dispatch(changeOrderType("vocabulary"))} className="px-0" xs={2}>
                     <strong>Vocabulary</strong><Arrow column={"vocabulary"} />

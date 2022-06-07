@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { useEffect } from "react";
 
-
-
 function ActionBar({ dataLength }: { dataLength: number }): NextFunctionComponent {
     const [perPage, currentPage] = useSelector((state: RootState) => [state.list.perPage, state.list.currentPage]);
     const dispatch = useDispatch();
@@ -27,17 +25,6 @@ function ActionBar({ dataLength }: { dataLength: number }): NextFunctionComponen
         dispatch(changeCurrent(1));
     };
 
-    const listenKeyPress = (event:any)=>{
-        if(event.keyCode==37) return previousPage()// <--
-        if(event.keyCode==39) return nextPage() // -->
-
-    }
-/**
-    useEffect(() => {
-        window.addEventListener("keydown", listenKeyPress);
-        return ()=>window.removeEventListener("keydown", listenKeyPress);
-    });
- */
     return (
         <Card className="bg-transparent">
             <Row>

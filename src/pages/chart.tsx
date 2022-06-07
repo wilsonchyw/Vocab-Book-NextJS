@@ -34,12 +34,15 @@ function processData(vocabs: Vocab[]): any {
         other: new Map()
     }
     vocabs.forEach(vocab => {
-        const timeStamp = new Date(parseInt(vocab.createAt)).toLocaleDateString()
+        //const timeStamp = new Date(parseInt(vocab.createAt)).toLocaleDateString()
+        const timeStamp = new Date(parseInt(vocab.createAt)).toDateString()
         const value = dateMap[vocab.type].get(timeStamp) || 0
         dateMap[vocab.type].set(timeStamp, value + 1)
     })
+    //console.log(dateMap)
     return dateMap
 }
+
 
 
 function Chart(): NextPage {

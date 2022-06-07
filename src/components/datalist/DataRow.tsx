@@ -28,7 +28,6 @@ type visible = {
     }
 }
 
-
 const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visible,onInputCorrect }: rowProp) => {
 
     const [_visible, setVisible] = useState<visible>({})
@@ -45,6 +44,8 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visible,onInpu
          * Determine should the details(inflection,example) be expand or not. Default is false
          */
         setExpand(visible.detail.always)
+        document.getElementById("row")?.addEventListener('click',speak2)
+        return ()=>document.getElementById("row")?.removeEventListener('click',speak2)
     }, [visible])
 
     const content = typeof data.inflection === "string" ? JSON.parse(data.inflection) : data.inflection
@@ -57,7 +58,7 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visible,onInpu
 
     if (isMobile) return (
         <div>
-            <Row className="p-2 ">
+            <Row className="p-2" >
                 {/**
                  * Clicking on the column will make the content visible or 
                  */}

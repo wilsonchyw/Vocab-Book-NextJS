@@ -56,7 +56,7 @@ const Datalist: FunctionComponent = ({ datas }: props) => {
     };
 
     const _datas = useMemo(() => datas.sort(sortCallback).filter(filterCallback[filterType]), [orderType, order, filterType, datas, keyword, revisionInterval, dateRange, learningDay]);
-    const header = useMemo(() => <DataHeader isMobile={isMobile} />, [isMobile]);
+    //const header = useMemo(() => <DataHeader isMobile={isMobile} />, [isMobile]);
     const actionBar = useMemo(() => <ActionBar dataLength={_datas.length} />, [_datas.length]);
     const [start, end] = perPage && currentPage ? [(currentPage - 1) * perPage, currentPage * perPage] : [0, _datas.length];
 
@@ -89,7 +89,9 @@ const Datalist: FunctionComponent = ({ datas }: props) => {
     return (
         <>
             {actionBar}
-            {header}
+            {//header
+            }
+            <DataHeader isMobile={isMobile} dataLength={_datas.length} correntLength={Object.keys(verify).length}/>
             {_datas.slice(start, end).map((data, index) => (
                 <Card key={data.id} className="shadow rounded zoom mouseover">
                     <DataRow data={data} handleEdit={handleEdit} isMobile={isMobile} visible={visible} onInputCorrect={onInputCorrect} />
