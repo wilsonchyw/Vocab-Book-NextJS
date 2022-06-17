@@ -1,3 +1,4 @@
-Add counter for verifier
-Fix date bug in learning progress
-Fix font style error
+Add verifier for mobile version
+Add close profile when user click outter area
+Verifier isn't case sensitive now
+Router bug fix

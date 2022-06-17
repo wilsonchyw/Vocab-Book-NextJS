@@ -12,6 +12,13 @@ import { RootState, store } from "store";
 import useSWR from "swr";
 
 const GESTURE_THRESHOLD = 50;
+const SWR_OPTION = {
+    refreshWhenHidden:false,
+    refreshWhenOffline:false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect:false
+}
+const SILENT = true
 
 function shoudShowMessage(id: String): Boolean {
     if (typeof window !== "undefined") {
@@ -41,7 +48,7 @@ function Frame(): NextPage {
     */
    
     const { vocabs, isLogin,isLocalLogin } = useSelector((state: RootState) => state.user);    
-    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher, { revalidateOnFocus: false });
+    const { data, mutate } = useSWR(isLogin ? "/vocab" : null, vocabs ? () => [...vocabs] : fetcher, SWR_OPTION);
 
     /**  
      * Experiment feature!!
@@ -86,10 +93,10 @@ function Frame(): NextPage {
                     dispatch(setMsg(response.value, "update", 30000));
                     localStorage.setItem("messageId", response.id);
                 }
-            });
+            },SILENT);
             apiHandler({ url: "/user" }, (response: string[]) => {
                 dispatch(setRevisionDays(response));
-            });
+            },SILENT);
         }
         
         /** 

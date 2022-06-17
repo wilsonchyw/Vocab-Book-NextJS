@@ -29,6 +29,7 @@ const DataHeader: FunctionComponent = ({ isMobile ,dataLength,correntLength}: pr
             <Row className="font-weight-bold">
                 <Col onClick={() => dispatch(changeOrderType("vocabulary"))} xs={5}>
                     <strong>Vocabulary</strong><Arrow column={"vocabulary"} />
+                    <br /><span>({correntLength}/{dataLength})</span>
                 </Col>
                 <Col onClick={() => dispatch(changeOrderType("meaning"))} className="p-0">
                     <strong>Meaning</strong>

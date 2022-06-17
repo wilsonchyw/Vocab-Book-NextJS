@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { Alert, Stack } from "react-bootstrap";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { useDispatch } from "react-redux";
-
+import Divider from "components/Divider";
 const uiConfig = {
     signInFlow: "popup",
     signInOptions: [
@@ -40,12 +40,16 @@ function Login(): NextPage {
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
 
             <Stack gap={2} className="col-md-5 mx-auto">
-                <Alert variant="danger" style={{ whiteSpace: "pre-wrap" }}>
-                    {`Please be aware that if you continue without login, data store locally only. Switching device may lose your learning progress.\n\nAlso, some function may not be supported`}
+                <Alert variant="primary" style={{ whiteSpace: "pre-wrap" }} className="w-50 text-center mx-auto">
+                    {`You may use a fake email address\nFor login only`}
                 </Alert>
+                <Divider content="" offset="offset"/>
                 <button type="button" className="btn btn-primary w-50 mx-auto" onClick={localLogin}>
-                    Continue without login
+                    Continue
                 </button>
+                <Alert variant="danger" style={{ whiteSpace: "pre-wrap" }} className="w-50 text-center mx-auto">
+                    {`Please be aware that if you continue without login, data store locally only. Learning progress will not sync between devices.\n\nAlso, some functions may not be supported`}
+                </Alert>
             </Stack>
         </div>
     );

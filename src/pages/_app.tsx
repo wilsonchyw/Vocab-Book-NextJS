@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import Loading from "components/Loading";
 //import Loading from "components/Loading";
 import Message from "components/Message";
 import { setLogin, setUser } from "components/slices/userSlice";
@@ -24,15 +25,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     const localLogin = store.getState().user.isLocalLogin;
 
     function toVocab(caller = "not provide") {
-        //console.log("toVocab call by", caller);
         if (publicRoute.includes(router.pathname)) router.push("/vocab");
         store.dispatch(setLogin(true));
         setHideContent(false);
     }
 
     function authCheck() {
-        //console.log("localLogin",localLogin,"url",router.pathname)
-        if (publicRoute.includes(router.pathname)) setHideContent(false)
+        if (publicRoute.includes(router.pathname)) setHideContent(false);
         if (localLogin) return toVocab();
         if (tokenManager.localWithVerify()) toVocab();
         tokenManager.firebase(
@@ -47,32 +46,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                 if (!publicRoute.includes(router.pathname)) router.push("/login");
             }
         );
-        //console.log("authCheck finish")
     }
-    /** 
-    function authCheck() {
-        if (localLogin) return toVocab();
-        if (getLocalToken()) toVocab("getLocalToken");
 
-        if (publicRoute.includes(router.pathname)) setHideContent(false);
-
-        firebase.auth().onIdTokenChanged((user: firebase.user) => {
-            if (user) {
-                localStorage.setItem("token", user._delegate.stsTokenManager.accessToken);
-                localStorage.setItem("expirationTime", user._delegate.stsTokenManager.expirationTime);
-                store.dispatch(setUser(user.displayName));
-                toVocab("firebase");
-            } else {
-                store.dispatch(setUser(null));
-                if (!publicRoute.includes(router.pathname)) router.push("/login");
-            }
-        });
-    }
-    */
     useEffect(() => {
-        router.events.on('routeChangeStart', ()=>setHideContent(true))
+        setHideContent(true);
         authCheck();
     }, [router.pathname]);
+
+    useEffect(() => {
+        console.log("hideContent", hideContent, "- Has changed");
+    }, [hideContent]);
 
     return (
         <SSRProvider>
@@ -85,9 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </Head>
             <Provider store={store}>
                 <Message />
-                {
-                    !hideContent && <Component {...pageProps} /> // : <Loading />
-                    //<Component {...pageProps} />
+                {!hideContent && <Component {...pageProps} /> //: <Loading />
                 }
             </Provider>
         </SSRProvider>

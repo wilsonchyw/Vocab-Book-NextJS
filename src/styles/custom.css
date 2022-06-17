@@ -78,7 +78,7 @@ body {
 }
 
 .identity {
-	top: 5%;
+	top: 1%;
 	right: 5%;
 	z-index: 2000;
 	position: fixed;

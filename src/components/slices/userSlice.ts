@@ -18,6 +18,7 @@ export interface userState {
     };
     revisionDays: number[];
     learningDay: number;
+    verifierDisplay: boolean;
 }
 
 const initialState: userState = {
@@ -34,6 +35,7 @@ const initialState: userState = {
     })(),
     revisionDays: [],
     learningDay: new Date().getTime(),
+    verifierDisplay: false,
 };
 
 function saveLocal(key: string, value: any) {
@@ -89,9 +91,13 @@ export const userSlice = createSlice({
         setLearningDate: (state: userState, action: PayloadAction<number>) => {
             state.learningDay = action.payload;
         },
+        toggleVerifierDisplay: (state: userState, action: PayloadAction<any>) => {
+            state.verifierDisplay = !state.verifierDisplay;
+        },
     },
 });
 
-export const { setUser, toggleDialog, setRevisionInterval, toggleAutoPlay, setLogin, setVocabs, setVocabLength, setLocalLogin, setRevisionDays, setLearningDate } = userSlice.actions;
+export const { setUser, toggleDialog, setRevisionInterval, toggleAutoPlay, setLogin, setVocabs, setVocabLength, setLocalLogin, setRevisionDays, setLearningDate, toggleVerifierDisplay } =
+    userSlice.actions;
 //export default userSlice.reducer;
 export const userReducer = userSlice.reducer;
