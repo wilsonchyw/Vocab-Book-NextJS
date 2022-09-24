@@ -3,11 +3,11 @@
 
 The [demonstration](https://vocabsitory.site/) integrate NextJS with SSL, Knex, Firebase and Nginx. It deployed on Oracle cloud and Cloudflare. It is Ad-free and free for use.
 
- <img src="https://i.imgur.com/FanQzUF.png" width="300">
+ <img src="https://i.imgur.com/Sr8i3DJ.png" width="300">
  
 ## Tech Stack
 #### Database
-- Oracle autonomous database, Redius
+- Oracle autonomous database, Radius
 #### Backend
 - Firebase, Knex
 #### Frontend
