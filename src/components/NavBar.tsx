@@ -12,6 +12,8 @@ import { FunctionComponent } from 'react';
 import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
+import Loading from './Loading';
+
 
 const Profile = dynamic(()=>import('components/Profile'))
 const PerPageDropdown = dynamic(()=>import('components/datalist/PerPageDropdown'))
@@ -22,10 +24,10 @@ const NavBar: FunctionComponent = () => {
     const isMobile = useAgent()
     const setPerPage = (value: number) => dispatch(changePerPage(value))
     const newVocab = () => {
-        if (route.pathname!="/vocab") route.push("vocab")
+        if (route.pathname!="/") route.push("/")
         dispatch(toggleCreate())
     }
-    const [vocabVisible, meaningVisible] = useSelector((state: RootState) => [state.visible.vocab, state.visible.meaning])
+    const [vocabVisible, meaningVisible,isChecking] = useSelector((state: RootState) => [state.visible.vocab, state.visible.meaning,state.user.isChecking])
 
     if (isMobile) return (
         <Navbar bg="dark" variant="dark" sticky="top">
@@ -48,7 +50,7 @@ const NavBar: FunctionComponent = () => {
                     </Dropdown>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="" onClick={() => dispatch(toggleDialog())}> <AccountCircleIcon /></Nav.Link>
+                    {isChecking?<Loading size="sm"/>:<Nav.Link href="" onClick={() => dispatch(toggleDialog())}> <AccountCircleIcon /></Nav.Link>}
                 </Nav>
             </Container>
             <Profile />
@@ -67,7 +69,7 @@ const NavBar: FunctionComponent = () => {
                     {!isMobile && <PerPageDropdown handleNumChange={setPerPage} />}
                 </Nav>
                 <Nav>
-                    <Nav.Link href="" onClick={() => dispatch(toggleDialog())}> <AccountCircleIcon /></Nav.Link>
+                    {isChecking?<Loading size="sm"/>:<Nav.Link href="" onClick={() => dispatch(toggleDialog())}> <AccountCircleIcon /></Nav.Link>}
                 </Nav>
             </Container>
             <Profile />

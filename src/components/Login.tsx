@@ -1,16 +1,17 @@
 import "firebase/compat/auth";
-import { firebase } from "lib/firebaseInit";
-import type { NextPage } from "next";
-import { Alert, Stack } from "react-bootstrap";
+//import { firebase } from "lib/firebaseInit";
+import firebase from "lib/firebaseInit";
+import { FunctionComponent } from "react";
+import { Alert, Button, Stack } from "react-bootstrap";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+
+
 const uiConfig = {
     signInFlow: "popup",
     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID, firebase.auth.FacebookAuthProvider.PROVIDER_ID, firebase.auth.EmailAuthProvider.PROVIDER_ID],
     signInSuccessUrl: "/",
     callbacks: {
         signInSuccessWithAuthResult: (currentUser: any) => {
-            console.log(currentUser.user._delegate);
-            console.log(currentUser.user._delegate.stsTokenManager.expirationTime);
             localStorage.setItem("token", currentUser.user._delegate.stsTokenManager.accessToken);
             localStorage.setItem("expirationTime", currentUser.user._delegate.stsTokenManager.expirationTime);
             return true;
@@ -18,18 +19,19 @@ const uiConfig = {
     },
 };
 
-function Login(): NextPage {
+export default function Login({ dismiss }: { dismiss: Function }): FunctionComponent {
+    
     return (
-        <div className="mt-5">
+        <div className="">
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-
-            <Stack gap={2} className="col-md-5 mx-auto">
-                <Alert variant="primary" style={{ whiteSpace: "pre-wrap" }} className="w-50 text-center mx-auto">
+            <Stack gap={2}>
+                <Alert variant="primary" style={{ whiteSpace: "pre-wrap" }} className="text-center mx-auto">
                     {`You may use a fake email address\nFor reference only`}
                 </Alert>
+                <Button variant="secondary" text="Dismiss" onClick={dismiss}>
+                    Back
+                </Button>
             </Stack>
         </div>
     );
 }
-
-export default Login;

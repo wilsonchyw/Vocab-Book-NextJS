@@ -15,7 +15,7 @@ const background = (type: string) => {
     }
 };
 
-const Message: FunctionComponent = () => {
+export default function Message(): FunctionComponent {
     const dispatch = useDispatch();
     const { messageQueue } = useSelector((state: RootState) => state.message);
     const handleClose = () => dispatch(deQueue());
@@ -39,5 +39,4 @@ const Message: FunctionComponent = () => {
             </div>
         )
     );
-};
-export default Message;
+}

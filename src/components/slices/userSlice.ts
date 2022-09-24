@@ -5,8 +5,9 @@ const AUTO_PLAY = "auto_play";
 
 export interface userState {
     user: String | null;
-    isLogin: Boolean;
+    //isLogin: Boolean;
     isLocalLogin: Boolean;
+    isChecking:Boolean;
     vocabs: Vocab[] | null;
     vocabLength: number;
     dialog: Boolean;
@@ -23,8 +24,9 @@ export interface userState {
 
 const initialState: userState = {
     user: null,
-    isLogin: false,
+    //isLogin: false,
     isLocalLogin: false,
+    isChecking:true,
     vocabs: null,
     vocabLength: 0,
     dialog: false,
@@ -62,8 +64,12 @@ export const userSlice = createSlice({
         setVocabLength: (state: userState, action: PayloadAction<number>) => {
             state.vocabLength = action.payload;
         },
+        /** 
         setLogin: (state: userState, action: PayloadAction<Boolean>) => {
             state.isLogin = action.payload;
+        },*/
+        setChecking:(state:userState,action:PayloadAction<Boolean>)=>{
+            state.isChecking = action.payload
         },
         setLocalLogin: (state: userState, action: PayloadAction<Boolean>) => {
             state.isLocalLogin = action.payload;
@@ -97,7 +103,7 @@ export const userSlice = createSlice({
     },
 });
 
-export const { setUser, toggleDialog, setRevisionInterval, toggleAutoPlay, setLogin, setVocabs, setVocabLength, setLocalLogin, setRevisionDays, setLearningDate, toggleVerifierDisplay } =
+export const { setUser, toggleDialog, setRevisionInterval,setChecking, toggleAutoPlay,  setVocabs, setVocabLength, setLocalLogin, setRevisionDays, setLearningDate, toggleVerifierDisplay } =
     userSlice.actions;
 //export default userSlice.reducer;
 export const userReducer = userSlice.reducer;

@@ -13,7 +13,7 @@ async function fetchHandler(option: VerifiedObj, callback: Function | null = nul
     try {
         if (!option.method) option.method = "get";
 
-        if (store.getState().user.isLocalLogin) {
+        if (option.url.includes("/local")) {
             const response = localDataHandler(option);
             return callback ? callback(response) : response;
         }

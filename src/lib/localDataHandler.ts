@@ -48,7 +48,7 @@ const localAPI: any = { get: getData, post: addOne, put: update, delete: _delete
 const localDataHandler = (option: any) => {
     console.log(option);
     console.log(localAPI);
-    if (option.url != "/vocab") return () => {};
+    if (option.url != "/local/vocab") return () => {};
     return localAPI[option.method](option.data);
 };
 

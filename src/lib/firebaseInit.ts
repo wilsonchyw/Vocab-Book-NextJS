@@ -6,5 +6,5 @@ const { publicRuntimeConfig } = getConfig();
 const firebaseConfig = publicRuntimeConfig.firebase
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 
-
+export default firebase
 export {firebase}
