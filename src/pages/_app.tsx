@@ -25,33 +25,31 @@ function MyApp({ Component, pageProps }: AppProps) {
     const isLocalLogin = store.getState().user.isLocalLogin;
 
     function handleLocalUser() {
+        //console.log("handleLocalUser")
         store.dispatch(setUser(null));
         store.dispatch(setLocalLogin(true));
         //store.dispatch(setLogin(true));
         store.dispatch(setChecking(false));
     }
 
-    console.log({ token });
     useEffect(() => {
-        console.log({ token, isLocalLogin });
-        if (token) {
-            if (isLocalLogin) {
-                tokenManager.firebase(
-                    // Resolve callback
-                    (user: firebase.user) => {
-                        store.dispatch(setVocabs(null));
-                        store.dispatch(setUser(user.displayName));
-                        store.dispatch(setLocalLogin(false));
-                        //store.dispatch(setLogin(true));
-                        store.dispatch(setChecking(false));
-                    },
-                    // Reject callback
-                    handleLocalUser
-                );
-            }
-        } else {
-            handleLocalUser();
+        //console.log({ token, isLocalLogin });
+        if (!token) {
+            store.dispatch(setChecking(true));
+            return tokenManager.firebase(
+                // Resolve callback
+                (user: firebase.user) => {
+                    store.dispatch(setVocabs(null));
+                    store.dispatch(setUser(user.displayName));
+                    store.dispatch(setLocalLogin(false));
+                    //store.dispatch(setLogin(true));
+                    store.dispatch(setChecking(false));
+                },
+                // Reject callback
+                handleLocalUser
+            );
         }
+        //return handleLocalUser();
     }, [router.pathname, token, isLocalLogin]);
 
     return (

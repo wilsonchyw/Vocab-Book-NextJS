@@ -25,7 +25,7 @@ export interface userState {
 const initialState: userState = {
     user: null,
     //isLogin: false,
-    isLocalLogin: false,
+    isLocalLogin: true,
     isChecking:true,
     vocabs: null,
     vocabLength: 0,

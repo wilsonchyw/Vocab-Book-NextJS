@@ -2,7 +2,7 @@ import Datalist from "components/datalist";
 import Dialog from "components/Dialog";
 import Loading from "components/Loading";
 import NavBar from "components/NavBar";
-import { setMsg, setRevisionDays, setVocabLength,setVocabs } from "components/slices";
+import { setMsg, setRevisionDays, setVocabLength, setVocabs } from "components/slices";
 import apiHandler from "lib/fetchHandler";
 import type { NextPage } from "next";
 import { useEffect } from "react";
@@ -17,7 +17,6 @@ const SWR_OPTION = {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
 };
-const SILENT = true;
 
 function shoudShowMessage(id: String): Boolean {
     if (typeof window !== "undefined") {
@@ -28,7 +27,7 @@ function shoudShowMessage(id: String): Boolean {
 }
 
 async function fetcher(url: string) {
-    console.log("fetcher")
+    console.log("fetcher");
     const option = { url: url };
     const result = await apiHandler(option);
     store.dispatch(setVocabLength(result.length));
@@ -38,9 +37,13 @@ async function fetcher(url: string) {
 
 function Frame(): NextPage {
     const dispatch = useDispatch();
-    const { vocabs,  isLocalLogin } = useSelector((state: RootState) => state.user);
+    const { vocabs, isLocalLogin } = useSelector((state: RootState) => state.user);
     //console.log({isLogin,vocabs,isLocalLogin})
-    const { data, mutate } = useSWR(isLocalLogin ? "/local/vocab":"/vocab" , vocabs ? () => [...vocabs] : fetcher, SWR_OPTION);
+    const { data, mutate } = useSWR(isLocalLogin ? "/local/vocab" : "/vocab", vocabs ? () => [...vocabs] : fetcher, SWR_OPTION);
+    const option = {
+        slient: true,
+        //public: true,
+    };
 
     useEffect(() => {
         if (isLocalLogin == false) {
@@ -52,14 +55,14 @@ function Frame(): NextPage {
                         localStorage.setItem("messageId", response.id);
                     }
                 },
-                SILENT
+                option
             );
             apiHandler(
                 { url: "/user" },
                 (response: string[]) => {
                     dispatch(setRevisionDays(response));
                 },
-                SILENT
+                option
             );
         }
     }, []); //[startPosition,endPosition,gestureStarted]
