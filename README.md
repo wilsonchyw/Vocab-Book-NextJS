@@ -1,7 +1,6 @@
 ## Vocabsitory
-[Vocabsitory](https://vocabsitory.site/)(Vocabulary Repository) is an application combined with the forgetting curve to learn new words. It helps to learn vocabulary in an more efficient way.<p />
 
-The [demonstration](https://vocabsitory.site/) integrate NextJS with SSL, Knex, Firebase and Nginx. It deployed on Oracle cloud and Cloudflare. It is Ad-free and free for use.
+[Vocab Book](http://vocab.services/) is a TypeScript, React, and Next.js application that uses the forgetting curve to help language learners memorize new words efficiently. Its user-friendly interface and advanced algorithms present users with new words at scientifically optimized intervals for maximum memory retention. With a wide range of languages and word lists, learners of all levels can use it to enhance their vocabulary knowledge and achieve their language learning goals faster.
 
  <img src="https://i.imgur.com/Sr8i3DJ.png" width="300">
  
