@@ -5,29 +5,22 @@
  <img src="https://i.imgur.com/Sr8i3DJ.png" width="300">
  
 ## Tech Stack
-#### Database
-- Oracle autonomous database, Radius
-#### Backend
-- Firebase, Knex
-#### Frontend
-- NextJS, Bootstrap, React, Redux 
-#### Deployment
-- Docker, Nginx, CloudFlare
-#### Unit testing
-- Jest
+* Database: Oracle Autonomous Database (Radius)
+* Backend: Firebase, Knex
+* Frontend: NextJS, Bootstrap, React, Redux
+* Deployment: Docker, Nginx, CloudFlare
+* Unit testing: Jest
 
 ## Development
 ### Preparation
-- Create an `.env` file on root folder
-- Oracle Database</p>
-Download the database wallet and place all files into `oracle/wallet`. Include the database login information in `.env`.
+1. Create an `.env` file on root folder
+2. For the Oracle database, download the database wallet and place all files into oracle/wallet. Include the database login information in .env:
 ```
 DATABASEUSER=<you database username>
 DATABASEPASS=<you database password>
-CONNNETSTRING=<you database connnectstring, could find in wallet/tnsnames.ora>
+CONNNETSTRING=<your database connection string, which can be found in wallet/tnsnames.ora>
 ```
-- Firebase</p>
-Create a Firebase project. Obtain the Firebase config from `Firebase console > Project setting > General > SDK setup and configuration`. Copy and append all into `.env` (Remenber to change `:` to `=`)
+3. For Firebase, create a Firebase project and obtain the Firebase config from Firebase console > Project setting > General > SDK setup and configuration. Copy and append all into .env (remember to change : to =):
 ```
 ...
 apiKey=Example
@@ -38,8 +31,7 @@ messagingSenderId=Example
 appId=Example
 measurementId=Example
 ```
-- Firebase Admin</p>
-Obtain your private key from `Firebase console > Project setting > Service accounts > Generate new private key`. Copy `project_id, private_key and client_email` then append it into `.env` (Remenber to change `:` to `=`)
+4. For Firebase Admin, obtain your private key from Firebase console > Project setting > Service accounts > Generate new private key. Copy project_id, private_key, and client_email and append them into .env (remember to change : to =):
 ```
 ...
 project_id=Example
@@ -53,8 +45,7 @@ docker-compose -f docker-compose-dev.yml up --build
 
 ## Deployment
 ### Preparation
-- SSL certificate</p>
-You may obtain a free SSl certificate from [Let's Encrypt](https://letsencrypt.org/). Place the `privkey.pem` and `fullchain.pem` into `nginx/certificate` folder. 
+1. Obtain a free SSL certificate from Let's Encrypt and place the privkey.pem and fullchain.pem into the nginx/certificate folder.
 ### Start
 ```
 docker-compose -f docker-compose-prod.yml up --build
