@@ -69,7 +69,7 @@ function Frame(): NextPage {
 
     return (
         <>
-            <NavBar />
+            <NavBar  datas={data}/>
             <div className="hero"></div>
             <Dialog mutate={mutate} />
             <Stack gap={2} className="col-md-10 mx-auto content vstack gap-2 p-3">

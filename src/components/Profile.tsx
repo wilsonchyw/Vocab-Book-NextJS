@@ -13,8 +13,9 @@ import ButtonMod from "components/Profile/ButtonMod";
 import useAgent from "lib/useAgent";
 import { Alert } from "react-bootstrap";
 import Login from "./Login";
-
-const Profile: FunctionComponent = () => {
+import ReadVocab from "./Profile/ReadVocab";
+import { Vocab } from "lib/vocab";
+const Profile: FunctionComponent = ({ datas}:{datas:Vocab[]}) => {
     const profileRef = useRef(null);
     const [isSigningIn, setSigningIn] = useState<Boolean>(false);
     const isMobile = useAgent();
@@ -95,7 +96,7 @@ const Profile: FunctionComponent = () => {
                                 <ButtonMod variant={detail.always ? "secondary" : "light"} onClick={() => dispatch(toggleDetail("always"))} text="All" />{" "}
                                 <ButtonMod variant={detail.onCorrect ? "secondary" : "light"} onClick={() => dispatch(toggleDetail("onCorrect"))} text="On correct" />
                                 {isMobile && <ButtonMod variant={verifierDisplay ? "secondary" : "light"} onClick={() => dispatch(toggleVerifierDisplay())} text="Verifier" />}
-                                <VoiceSetting toggle={toggle} />
+                                <VoiceSetting toggle={toggle} datas={datas}/>
                                 <Divider content="Learning progress" offset="mx-1" />
                                 <ButtonMod variant="secondary" onClick={() => route.push("/chart")} text="View" />{" "}
                                 <ButtonMod variant="secondary" onClick={exportData} text="Export" disabled={isLocalLogin} />

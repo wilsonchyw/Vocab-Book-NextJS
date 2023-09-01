@@ -5,6 +5,8 @@ import { FunctionComponent } from "react";
 import { Dropdown } from "react-bootstrap";
 import { RootState } from "store";
 import { MouseEvent } from "react";
+import ReadVocab from "./Profile/ReadVocab";
+import { Vocab } from "lib/vocab";
 //typeof window !== "undefined" ? window.speechSynthesis.getVoices().filter((x) => x.lang.includes("en"))
 const voiceList = [
     {
@@ -41,7 +43,7 @@ const voiceList = [
     },
 ];
 
-const VoiceSetting: FunctionComponent = ({ toggle }: { toggle: Function }) => {
+const VoiceSetting: FunctionComponent = ({ toggle,datas }: { toggle: Function,datas:Vocab[] }) => {
     const dispatch = useDispatch();
     const { name, rate } = useSelector((state: RootState) => state.voice);
 
@@ -51,10 +53,11 @@ const VoiceSetting: FunctionComponent = ({ toggle }: { toggle: Function }) => {
         dispatch(setVoide({ name: voice.name, lang: voice.lang }));
         toggle();
     };
-    
+
     return (
         <>
             <Divider content="voice" />
+            <ReadVocab datas={datas}/>
             <Dropdown className="mt-1">
                 <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
                     <span>{name}</span>

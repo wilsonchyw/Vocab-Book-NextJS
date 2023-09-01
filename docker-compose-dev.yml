@@ -14,14 +14,12 @@ services:
         environment:
             LD_LIBRARY_PATH: "/opt/oracle/instantclient_19_10"
             WALLET: "/app/oracle/wallet"            
-            API_ENDPOINT: "https://api.vocabsitory.site/api"
+            API_ENDPOINT: "https://api.vocab.services/api"
             #"http://150.230.38.246:3000"
             #"https://api.vocabsitory.site/api"
         image: nextjs_dev
         container_name: nextjs_dev
-        networks: 
-            - next-prod-networks
 networks:
-    next-prod-networks:
-        external:
-            name: vocab-book-nest_default
+    default:
+        name: "composite_network"
+        external: true

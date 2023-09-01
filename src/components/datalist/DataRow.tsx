@@ -52,7 +52,7 @@ const DataRow: FunctionComponent = ({ data, handleEdit, isMobile, visible, onInp
         content: content,
         hasContent: Object.keys(content).some((x) => !!content[x].vocab),
     };
-    const example = data.example != null ? JSON.parse(data.example) : [];
+    const example = []//data.example != null ? JSON.parse(data.example) : [];
     const hasFooter: Boolean = example.length || inflection.hasContent;
 
     if (isMobile)

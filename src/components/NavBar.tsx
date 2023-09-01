@@ -6,6 +6,7 @@ import { changeOrderType, changePerPage } from 'components/slices/listSlice';
 import { toggleDialog } from "components/slices/userSlice";
 import { toggleVisible } from "components/slices/visibleSlice";
 import useAgent from "lib/useAgent";
+import { Vocab } from 'lib/vocab';
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/router";
 import { FunctionComponent } from 'react';
@@ -18,7 +19,7 @@ import Loading from './Loading';
 const Profile = dynamic(()=>import('components/Profile'))
 const PerPageDropdown = dynamic(()=>import('components/datalist/PerPageDropdown'))
 
-const NavBar: FunctionComponent = () => {
+const NavBar: FunctionComponent = ({ datas}:{datas:Vocab[]}) => {
     const route = useRouter()
     const dispatch = useDispatch()
     const isMobile = useAgent()
@@ -29,6 +30,7 @@ const NavBar: FunctionComponent = () => {
     }
     const [vocabVisible, meaningVisible,isChecking] = useSelector((state: RootState) => [state.visible.vocab, state.visible.meaning,state.user.isChecking])
 
+    
     if (isMobile) return (
         <Navbar bg="dark" variant="dark" sticky="top">
             <Container>
@@ -53,7 +55,7 @@ const NavBar: FunctionComponent = () => {
                     {isChecking?<Loading size="sm"/>:<Nav.Link href="" onClick={() => dispatch(toggleDialog())}> <AccountCircleIcon /></Nav.Link>}
                 </Nav>
             </Container>
-            <Profile />
+            <Profile datas={datas}/>
         </Navbar >
     )
 
@@ -72,7 +74,7 @@ const NavBar: FunctionComponent = () => {
                     {isChecking?<Loading size="sm"/>:<Nav.Link href="" onClick={() => dispatch(toggleDialog())}> <AccountCircleIcon /></Nav.Link>}
                 </Nav>
             </Container>
-            <Profile />
+            <Profile datas={datas} />
         </Navbar >
     )
 }
